@@ -6,3 +6,4 @@ bcrypt
 postgres db
 react
 axios
+react-router-dom
