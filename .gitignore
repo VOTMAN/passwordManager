@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 /backend/.venv
 /backend/__pycache__
+/backend/PasswordManager
 dist
 dist-ssr
 *.local
