@@ -1,3 +1,4 @@
+import os
 import bcrypt 
 import psycopg2
 from flask import Flask, jsonify, request
@@ -8,11 +9,11 @@ CORS(app, resources={r"/*": {"origins": r"http://localhost:5173/*"}})
 
 def getDbConnection():
     conn = psycopg2.connect(
-        host="localhost", 
-        dbname="postgres", 
-        user="postgres", 
-        password="hxur4752", 
-        port=5432,
+        host=os.getenv("DB_HOST"), 
+        dbname=os.getenv("DB_NAME"), 
+        user=os.getenv("DB_USER"), 
+        password=os.getenv("DB_PASS"), 
+        port=os.getenv("DB_PORT"),
     )
     
     return conn
@@ -75,7 +76,7 @@ def loginUsers():
     user_data = cur.fetchone()
 
     hashed_pass = user_data[0]
-    print(hashed_pass)
+
     if bcrypt.checkpw(password.encode('utf-8'), hashed_pass.encode('utf-8')):
         return jsonify({"message": "Login Success"}), 200
     
