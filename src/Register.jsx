@@ -5,11 +5,16 @@ import { Link } from "react-router-dom"
 const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const username = document.getElementById('user').value
-    const password = document.getElementById('pass').value
-    const repass = document.getElementById('repass').value
-    const statText = document.getElementById('statusText')
+    const username = document.getElementById('user-r').value
+    const password = document.getElementById('pass-r').value
+    const repass = document.getElementById('repass-r').value
+    const statText = document.getElementById('statusText-r')
     
+    if (username === '' || password === '' || repass === '') {
+      alert("Fill all the fields")
+      return
+    }
+
     if (password != repass) {
       alert("The passwords are not the same")
       return
@@ -30,11 +35,11 @@ const Register = () => {
       })
       
       if (!res.ok) {
-        statText.style.color = 'red'
         const errorData = await res.json()
+        statText.style.color = 'red'        
         statText.innerText = errorData.error
+        return
       }
-        
         
       const data = await res.json()
       statText.style.color = 'green'
@@ -42,11 +47,8 @@ const Register = () => {
       alert("User Created")
       
     } catch (error) {
-      if (error instanceof TypeError) {
-        statText.innerText = "Server Down, Try later"
-      } else {
-        console.log("Error: ", error)
-      }
+      statText.style.color = "blue"
+      statText.innerText = "Server Down, Try Again Later" 
     }  
   }
 
@@ -54,17 +56,23 @@ const Register = () => {
     <div>
       <h2>Register</h2>
       <div>
-        <label htmlFor="name">Username</label>
-        <input type="text" name="username" id="user" />
+        <div>
+          <label htmlFor="name">Username</label>
+          <input type="text" name="username" id="user-r" />
+        </div>
         <br/>
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="pass" />
+        <div>
+          <label htmlFor="password">Password</label>
+          <input type="password" name="password" id="pass-r" />
+        </div>
         <br/>
-        <label htmlFor="password">Re-Enter Password</label>
-        <input type="password" name="password" id="repass" />
+        <div>
+          <label htmlFor="password">Re-Enter Password</label>
+          <input type="password" name="password" id="repass-r" />
+        </div>
         <br/>
         <button onClick={handleSubmit}>Register</button>
-        <p id="statusText"></p>
+        <p id="statusText-r"></p>
       </div>
       <p>Already a user? Go to the <Link to='/Login'>Login Page</Link></p>
     </div>

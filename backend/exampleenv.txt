@@ -1,0 +1,5 @@
+export DB_HOST = <your_host>
+export DB_NAME = <your_db_name>
+export DB_USER = <your_username>
+export DB_PASS = <your_password>
+export DB_PORT = <your_port>
