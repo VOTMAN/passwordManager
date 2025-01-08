@@ -1,12 +1,17 @@
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { AuthContext } from './AuthContext'
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
 
 const PMPage = () => {
   const { token } = useContext(AuthContext)
   const username = useParams().username
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login')
+    }
+  }, [token, navigate])
 
   const checkTokenValidity = async () => {
     try {
@@ -34,7 +39,6 @@ const PMPage = () => {
     }
 
     try {
-      console.log(token)
       const res = await fetch(`http://localhost:5000/api/${username}/getPasswords`, {
         method:"GET",
         headers:{
