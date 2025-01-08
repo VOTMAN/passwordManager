@@ -1,11 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+
 import Home from './Home.jsx'
 import Register from './Register.jsx'
 import Login from './Login.jsx'
 import PMPage from './PMPage.jsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import NotFoundPage from './NotFoundPage.jsx'
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthProvider } from './AuthContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,7 +31,7 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <AuthProvider>
     <RouterProvider router={router}/>
-  </StrictMode>,
+  </AuthProvider>,
 )

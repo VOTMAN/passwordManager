@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "./AuthContext"
+import { useContext } from "react"
+
 const Login = () => {
+  const {setToken} = useContext(AuthContext)
+  const navigate = useNavigate()
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = document.getElementById("user-l").value
@@ -26,8 +33,12 @@ const Login = () => {
       }
 
       const data = await res.json()
+      const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
+      console.log(accessToken)
+      setToken(accessToken)
+      setTimeout(navigate("/PMpage/" + username), 1000)
     } catch (error) {
       console.log(error)
     }
