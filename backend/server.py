@@ -94,6 +94,7 @@ def loginUsers():
     hashed_pass = user_data[0]
 
     if bcrypt.checkpw(password.encode('utf-8'), hashed_pass.encode('utf-8')):
+
         accessToken = create_access_token(identity=str(user_id), expires_delta=timedelta(minutes=15))
         return jsonify({"message": "Login Success", "access_token": accessToken}), 200
     
@@ -103,6 +104,7 @@ def loginUsers():
 
 @jwt_required()
 def protected():
+    
     current_user = get_jwt_identity()
     return jsonify(logged_user = current_user), 200
 
@@ -110,9 +112,8 @@ def protected():
 
 @jwt_required()
 def getPasswords(username):
+    
     user_id = get_jwt_identity()
-    print(user_id)
-    print(username)
     return jsonify({"message": "success"})
 
 if __name__ == "__main__":

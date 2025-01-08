@@ -17,7 +17,6 @@ const PMPage = () => {
         }
       })
   
-      console.log(res)
       if (res.status == 401) {
         alert("Session Expired, Logging out...")
         navigate("/login")
@@ -33,7 +32,7 @@ const PMPage = () => {
       alert("Cannot access session token, Logging out...")
       navigate("/login")
     }
-    
+
     try {
       console.log(token)
       const res = await fetch(`http://localhost:5000/api/${username}/getPasswords`, {
@@ -45,9 +44,8 @@ const PMPage = () => {
 
       if (!res.ok) {
         console.error(data)
-      } else {
-        console.log(data)
       }
+      
     } catch (err) {
       console.log(err)
     }

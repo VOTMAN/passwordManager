@@ -36,7 +36,6 @@ const Login = () => {
       const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
-      console.log(accessToken)
       setToken(accessToken)
       setTimeout(navigate("/PMpage/" + username), 1000)
     } catch (error) {
