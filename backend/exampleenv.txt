@@ -3,3 +3,5 @@ export DB_NAME = <your_db_name>
 export DB_USER = <your_username>
 export DB_PASS = <your_password>
 export DB_PORT = <your_port>
+export SECRET_KEY = <your_secret_key>
+export JWT_SECRET_KEY = <your_jwt_secret_key>

@@ -10,12 +10,14 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
-    r"/*": {
+    r"/api/*": {
         "origins": r"http://localhost:5173/*",
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
 })
+
+# CORS(app)
 
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
@@ -34,11 +36,33 @@ def getDbConnection():
     
     return conn
 
+def createTables():
+    conn = getDbConnection()
+    cur = conn.cursor()
+
+    cur.execute("""CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL
+);""")
+    
+    cur.execute("""CREATE TABLE IF NOT EXISTS passwords (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    website VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);""")
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
 
 @app.route("/api/reg", methods=["POST"])
 
 def registerUsers():
     try:
+        createTables()
         data = request.json
         username = data.get('username')
         password = data.get('password')
@@ -100,21 +124,46 @@ def loginUsers():
     
     return jsonify({"error": "Login Failed"}), 401
 
-@app.route("/api/protected", methods=['GET'])
 
+@app.route("/api/protected", methods=['GET'])
 @jwt_required()
 def protected():
-    
     current_user = get_jwt_identity()
     return jsonify(logged_user = current_user), 200
 
-@app.route("/api/<username>/getPasswords", methods=['GET'])
 
+@app.route("/api/<username>/setPassword", methods=['POST'])
+@jwt_required()
+def setPassword(username):
+    user_id = get_jwt_identity()
+    data = request.json
+    wb = data.get('websiteName')
+    wp = data.get('websitePassword')
+    try:
+        conn = getDbConnection()
+        cur = conn.cursor()
+
+        cur.execute("INSERT INTO passwords (user_id, website, password) VALUES (%s, %s, %s)", (user_id, wb, wp))
+
+        conn.commit()
+        return jsonify({"message": "Password Inserted"}), 201
+    except Exception as e:
+        return jsonify({"error" : "Internal Server Error", "details": e}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+@app.route("/api/<username>/getPasswords", methods=['GET'])
 @jwt_required()
 def getPasswords(username):
-    
     user_id = get_jwt_identity()
-    return jsonify({"message": "success"})
+    conn = getDbConnection()
+    cur = conn.cursor()
+
+    cur.execute("SELECT id, website, password FROM passwords WHERE user_id = %s", (user_id))
+    data = cur.fetchall()
+
+    return jsonify({"message": "success", "data": data})
 
 if __name__ == "__main__":
     app.run(debug=True)

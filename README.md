@@ -1,8 +1,11 @@
 # Password Manager
 
+bcrypt 
 psycopg2
-flash
-bcrypt
+flask
+flask_cors 
+flask_jwt_extended
+python_dotenv
 postgres db
 react
 axios
