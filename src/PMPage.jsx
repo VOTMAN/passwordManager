@@ -8,10 +8,12 @@ const PMPage = () => {
   const [load, setLoad] = useState(false)
   const username = useParams().username
   const navigate = useNavigate()
+  const statText = document.getElementById('statText')
 
   useEffect(() => {
     if (!token) {
       navigate('/login')
+      window.location.reload()
     }
   }, [token, navigate])
 
@@ -30,28 +32,30 @@ const PMPage = () => {
         window.location.reload()
       }
     } catch (err) {
-      console.error(err)
+      statText.style.color = 'red'
+      statText.innerText = err.message
     }
   }
 
   const setPassword = async () => {
     const websiteName = document.getElementById('websiteName').value
+    const websiteUser = document.getElementById('websiteUser').value
     const websitePassword = document.getElementById('websitePassword').value
     
-    if (websiteName === '' || websitePassword === '') {
+    if (websiteName === '' || websiteUser === '' || websitePassword === '') {
       alert("Fill both the fields")
       return
     }
     
-    const statText = document.getElementById('statText')
     
     const wsd = {
       websiteName,
-      websitePassword
+      websiteUser,
+      websitePassword,
     }
 
     try{
-      const res = await fetch(`http://localhost:5000/api/${username}/setPassword`, {
+      const res = await fetch(`http://localhost:5000/api/setPassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,39 +66,51 @@ const PMPage = () => {
       
       const data = await res.json()
       if (!res.ok) {
+        statText.style.color = 'red'
         statText.innerText = data.error
         return
       } 
 
-      statText.innerTex = data.message
+      statText.style.color = 'green'
+      statText.innerText = data.message
+      
+      
       setLoad(false)
     } catch (err) {
-      console.error(err)
+      statText.style.color = 'red'
+      statText.innerText = err.message
     }
   }
+  
   const getPasswords = async () => {
     if (token == null) {
       alert("Cannot access session token, Logging out...")
       navigate("/login")
     }
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/${username}/getPasswords`, {
+      const res = await fetch(`http://127.0.0.1:5000/api/getPasswords`, {
         method:"GET",
         headers:{
           'Authorization': `Bearer ${token}`,
         },
       })
 
+      const data = await res.json()
       if (!res.ok) {
-        console.error(data)
+        statText.style.color = 'red'
+        statText.innerText = data.error
+        return
       }
 
-      const data = await res.json()
       setPasswords(data.data)
       setLoad(true)
 
+      statText.style.color = 'green'
+      statText.innerText = data.message
+    
     } catch (err) {
-      console.log(err)
+      statText.style.color = 'red'
+      statText.innerText = err.message
     }
   }
 
@@ -108,11 +124,12 @@ const PMPage = () => {
         <h4>ThePassword Manager</h4>
         <button onClick={() => setToken(null)}>Log Out</button>
       </div>
-      <h2>Welcome {username}!</h2>
+      <h1>Welcome {username}!</h1>
       <h3 id='statText'></h3>
       <div>
         <h4>Add Password</h4>
         <input type="text" id="websiteName" placeholder='Enter the website...'/>
+        <input type="text" id="websiteUser" placeholder="Website's username or email"/>
         <input type="password" id="websitePassword" placeholder='Enter the password...'/>
         <button onClick={setPassword}>Add Password</button>
       </div>

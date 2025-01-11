@@ -1,5 +1,6 @@
 import os
 import bcrypt 
+from cryptography.fernet import Fernet
 import psycopg2
 from datetime import timedelta
 from flask import Flask, jsonify, request
@@ -22,6 +23,9 @@ CORS(app, supports_credentials=True, resources={
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 app.config['JWT_SECRET_KEY'] = os.getenv("JWT_SECRET_KEY")
 app.config['JWT_TOKEN_LOCATION'] = ['headers']
+encrypt_key = str(os.getenv("ENCRYPT_KEY"))
+key = str(encrypt_key).encode()
+
 
 jwt = JWTManager(app)
 
@@ -50,6 +54,7 @@ def createTables():
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
     website VARCHAR(255) NOT NULL,
+    w_user VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL
 );""")
 
@@ -97,33 +102,39 @@ def registerUsers():
 @app.route("/api/login", methods=["POST"])
 
 def loginUsers():
+    try:
+        data = request.json
+        username = data.get("username")
+        password = data.get("password")
+
+        conn = getDbConnection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT id, username FROM users WHERE username = %s", (username,))
+        userExists = cur.fetchone()
+
+        if not userExists:
+            return jsonify({"error": "User does not exists"}), 409
+        
+        user_id = userExists[0]
+        cur.execute("SELECT hashed_pass from users WHERE username = %s", (username,))
+        user_data = cur.fetchone()
+
+        hashed_pass = user_data[0]
+
+        if bcrypt.checkpw(password.encode('utf-8'), hashed_pass.encode('utf-8')):
+
+            accessToken = create_access_token(identity=str(user_id), expires_delta=timedelta(minutes=15))
+            return jsonify({"message": "Login Success", "access_token": accessToken}), 200
+        
+        return jsonify({"error": "Login Failed"}), 401
     
-    data = request.json
-    username = data.get("username")
-    password = data.get("password")
-
-    conn = getDbConnection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT id, username FROM users WHERE username = %s", (username,))
-    userExists = cur.fetchone()
-
-    if not userExists:
-        return jsonify({"error": "User does not exists"}), 409
+    except Exception as e:
+        return jsonify({"error": "Internal Server Error"})
     
-    user_id = userExists[0]
-    cur.execute("SELECT hashed_pass from users WHERE username = %s", (username,))
-    user_data = cur.fetchone()
-
-    hashed_pass = user_data[0]
-
-    if bcrypt.checkpw(password.encode('utf-8'), hashed_pass.encode('utf-8')):
-
-        accessToken = create_access_token(identity=str(user_id), expires_delta=timedelta(minutes=15))
-        return jsonify({"message": "Login Success", "access_token": accessToken}), 200
-    
-    return jsonify({"error": "Login Failed"}), 401
-
+    finally:
+        cur.close()
+        conn.close()
 
 @app.route("/api/protected", methods=['GET'])
 @jwt_required()
@@ -132,38 +143,59 @@ def protected():
     return jsonify(logged_user = current_user), 200
 
 
-@app.route("/api/<username>/setPassword", methods=['POST'])
+@app.route("/api/setPassword", methods=['POST'])
 @jwt_required()
-def setPassword(username):
+def setPassword():
     user_id = get_jwt_identity()
     data = request.json
     wb = data.get('websiteName')
+    wu = data.get('websiteUser')
     wp = data.get('websitePassword')
     try:
         conn = getDbConnection()
         cur = conn.cursor()
 
-        cur.execute("INSERT INTO passwords (user_id, website, password) VALUES (%s, %s, %s)", (user_id, wb, wp))
+        
+        cipher = Fernet(key)
+        encrypted_pass = cipher.encrypt(wp.encode())
+        
+        cur.execute("INSERT INTO passwords (user_id, website, w_user, password) VALUES (%s, %s, %s, %s)", (user_id, wb, wu, encrypted_pass.decode()))
 
         conn.commit()
         return jsonify({"message": "Password Inserted"}), 201
+    
+    except Exception as e:
+        return jsonify({"error" : "Internal Server Error", "details": e}), 500
+    
+    finally:
+        cur.close()
+        conn.close()
+
+@app.route("/api/getPasswords", methods=['GET'])
+@jwt_required()
+def getPasswords():
+    try:
+        user_id = get_jwt_identity()
+        conn = getDbConnection()
+        cur = conn.cursor()
+        cipher = Fernet(key)
+
+        cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id))
+        data = cur.fetchall()
+
+        processed = []
+        for item in data:
+            new_item = list(item)
+            new_item[3] = (cipher.decrypt(new_item[3])).decode()
+            processed.append(tuple(new_item))
+
+        return jsonify({"message": "Passwords Retrieved", "data": processed}), 200
     except Exception as e:
         return jsonify({"error" : "Internal Server Error", "details": e}), 500
     finally:
         cur.close()
         conn.close()
 
-@app.route("/api/<username>/getPasswords", methods=['GET'])
-@jwt_required()
-def getPasswords(username):
-    user_id = get_jwt_identity()
-    conn = getDbConnection()
-    cur = conn.cursor()
-
-    cur.execute("SELECT id, website, password FROM passwords WHERE user_id = %s", (user_id))
-    data = cur.fetchall()
-
-    return jsonify({"message": "success", "data": data})
 
 if __name__ == "__main__":
     app.run(debug=True)

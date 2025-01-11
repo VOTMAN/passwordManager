@@ -5,12 +5,12 @@ import { Link } from "react-router-dom"
 const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const username = document.getElementById('user-r').value
+    const username = String(document.getElementById('user-r').value).trim()
     const password = document.getElementById('pass-r').value
     const repass = document.getElementById('repass-r').value
     const statText = document.getElementById('statusText-r')
     
-    if (username === '' || password === '' || repass === '') {
+    if (!username || !password || !repass) {
       alert("Fill all the fields")
       return
     }
@@ -72,9 +72,9 @@ const Register = () => {
         </div>
         <br/>
         <button onClick={handleSubmit}>Register</button>
-        <p id="statusText-r"></p>
+        <h4 id="statusText-r"></h4>
       </div>
-      <p>Already a user? Go to the <Link to='/Login'>Login Page</Link></p>
+      <h3>Already a user? Go to the <Link to='/Login'>Login Page</Link></h3>
     </div>
   )
 }

@@ -1,16 +1,16 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "./AuthContext"
 import { useContext, useEffect } from "react"
 
 const Login = () => {
   const {setToken} = useContext(AuthContext)
   const navigate = useNavigate()
+  const statText = document.getElementById("statusText-l")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
-    const statText = document.getElementById("statusText-l")
     
     if (username === '' || password === '') {
       alert("Fill all the fields")
@@ -44,7 +44,8 @@ const Login = () => {
       setToken(accessToken)
       navigate("/PMpage/" + username)
     } catch (error) {
-      console.log(error)
+      statText.style.color = "blue"
+      statText.innerText = "Server Down, Try Again Later"
     }
   }
 
@@ -61,8 +62,9 @@ const Login = () => {
           <input type="password" name="username" id="password-l" />
         </div>
         <button id="submit" onClick={handleSubmit}>Login</button>
-        <p id="statusText-l"></p>
+        <h4 id="statusText-l"></h4>
       </div>
+      <h3>Not a user? <Link to='/Register'>Register</Link></h3>
     </div>
   )
 }
