@@ -155,7 +155,6 @@ def setPassword():
         conn = getDbConnection()
         cur = conn.cursor()
 
-        
         cipher = Fernet(key)
         encrypted_pass = cipher.encrypt(wp.encode())
         
