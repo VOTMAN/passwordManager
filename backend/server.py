@@ -30,7 +30,7 @@ key = str(encrypt_key).encode()
 jwt = JWTManager(app)
 
 def getDbConnection():
-    conn = psycopg2.connect(os.getenv("DB_CONNECTION_URL"))
+    conn = psycopg2.connect("postgresql://appuser:dNrgR6mfefuVstgcfPKhOWf7yihO3d8n@dpg-cu29l2aj1k6c73ch30t0-a.singapore-postgres.render.com/renderdb_5nzm")
     
     return conn
 
