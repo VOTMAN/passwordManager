@@ -1,11 +1,11 @@
 import os
-import bcrypt 
+import bcrypt
 from cryptography.fernet import Fernet
 import psycopg2
 from datetime import timedelta
 from flask import Flask, jsonify, request
-from flask_cors import CORS 
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
+from flask_cors import CORS
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 
 
 app = Flask(__name__)
@@ -30,13 +30,7 @@ key = str(encrypt_key).encode()
 jwt = JWTManager(app)
 
 def getDbConnection():
-    conn = psycopg2.connect(
-        host=os.getenv("DB_HOST"), 
-        dbname=os.getenv("DB_NAME"), 
-        user=os.getenv("DB_USER"), 
-        password=os.getenv("DB_PASS"), 
-        port=os.getenv("DB_PORT"),
-    )
+    conn = psycopg2.connect(os.getenv("DB_CONNECTION_URL"))
     
     return conn
 
@@ -47,7 +41,7 @@ def createTables():
     cur.execute("""CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL
+    hashed_pass TEXT NOT NULL
 );""")
     
     cur.execute("""CREATE TABLE IF NOT EXISTS passwords (
@@ -79,7 +73,7 @@ def registerUsers():
             return jsonify({"error": "Username and password are required"}), 400
         
         
-        cur.execute("SELECT username from users WHERE username = %s", (username,))
+        cur.execute("SELECT username FROM users WHERE username = %s", (username,))
         user_exists = cur.fetchone()
         
         if user_exists:
@@ -102,6 +96,7 @@ def registerUsers():
 @app.route("/api/login", methods=["POST"])
 
 def loginUsers():
+
     try:
         data = request.json
         username = data.get("username")
