@@ -5,12 +5,12 @@ import { useContext, useEffect } from "react"
 const Login = () => {
   const {setToken} = useContext(AuthContext)
   const navigate = useNavigate()
-  const statText = document.getElementById("statusText-l")
-
+  
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
+    let statText = document.getElementById("statusText-l")
     
     if (username === '' || password === '') {
       alert("Fill all the fields")
@@ -31,19 +31,20 @@ const Login = () => {
         body: JSON.stringify(userData)
       })
 
+      const data = await res.json()
       if (!res.ok) {
         statText.style.color = "red"
-        const err = await res.json()
-        statText.innerText = err.error
+        statText.innerText = data.error
+        return
       }
 
-      const data = await res.json()
       const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
       setToken(accessToken)
       navigate("/PMpage/" + username)
     } catch (error) {
+      console.error(error)
       statText.style.color = "blue"
       statText.innerText = "Server Down, Try Again Later"
     }
@@ -62,7 +63,7 @@ const Login = () => {
           <input type="password" name="username" id="password-l" />
         </div>
         <button id="submit" onClick={handleSubmit}>Login</button>
-        <h4 id="statusText-l"></h4>
+        <h4 id="statusText-l">-</h4>
       </div>
       <h3>Not a user? <Link to='/Register'>Register</Link></h3>
     </div>

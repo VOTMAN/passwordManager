@@ -37,7 +37,8 @@ def getDbConnection():
         password=os.getenv("DB_PASS"), 
         port=os.getenv("DB_PORT"),
     )
-    
+
+
     return conn
 
 def createTables():
@@ -103,6 +104,7 @@ def registerUsers():
 
 def loginUsers():
     try:
+        createTables()
         data = request.json
         username = data.get("username")
         password = data.get("password")
