@@ -98,6 +98,7 @@ def registerUsers():
 def loginUsers():
 
     try:
+        createTables()
         data = request.json
         username = data.get("username")
         password = data.get("password")

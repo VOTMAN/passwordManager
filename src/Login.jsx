@@ -5,12 +5,12 @@ import { useContext, useEffect } from "react"
 const Login = () => {
   const {setToken} = useContext(AuthContext)
   const navigate = useNavigate()
-  const statText = document.getElementById("statusText-l")
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
+    const statText = document.getElementById("statusText-l")
     
     if (username === '' || password === '') {
       alert("Fill all the fields")
@@ -35,6 +35,7 @@ const Login = () => {
         statText.style.color = "red"
         const err = await res.json()
         statText.innerText = err.error
+        return
       }
 
       const data = await res.json()
