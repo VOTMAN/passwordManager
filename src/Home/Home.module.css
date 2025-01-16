@@ -1,16 +1,17 @@
+
 * {
     margin: 0;
     padding: 0;
-    background-color: hsl(200, 8%, 22%);
-    color: hsla(74, 100%, 92%, 0.726);
+    background-color: #000718;
+    color: #cedaff;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     padding: 1rem 1.5rem;
-    background-color: hsl(199, 25%, 20%);
-    border: 1px solid white;
+    border-bottom: 0.3px solid rgba(255, 255, 255, 0.301);
     margin-bottom: 2rem;
 }
 
@@ -18,26 +19,25 @@
     background-color: inherit;
 }
 
-.nav-links {
+.navLinks {
     display: flex;
     background-color: inherit;
     gap: 1rem;
 }
 
-.nav-item {
+.navItem {
     text-decoration: none;
-    padding: 0.3rem;
+    padding: 0.4rem;
     background-color: inherit;
-    border-radius: 2px;    
+    border-radius: 3px;    
     transition: 0.3s ease;   
 }
 
-.nav-item:hover {
-
-    background: hsla(74, 100%, 92%, 0.726);
-    color: #2f3436;
+.navItem:hover {
+    background: #7697fe;
+    color: #000000;
 }
 
-.page-title, .page-desc {
+.pageTextCenter {
     text-align: center;
 }
