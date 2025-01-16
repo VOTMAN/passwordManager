@@ -181,9 +181,8 @@ def getPasswords():
         cur = conn.cursor()
         cipher = Fernet(key)
 
-        cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id))
+        cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id,))
         data = cur.fetchall()
-
         processed = []
         for item in data:
             new_item = list(item)
@@ -192,7 +191,8 @@ def getPasswords():
 
         return jsonify({"message": "Passwords Retrieved", "data": processed}), 200
     except Exception as e:
-        return jsonify({"error" : "Internal Server Error", "details": e}), 500
+        print(e)
+        return jsonify({"error" : "Internal Server Error"}), 500
     finally:
         cur.close()
         conn.close()
