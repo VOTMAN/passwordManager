@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    background-color: hsl(200, 8%, 22%);
+    color: hsla(74, 100%, 92%, 0.726);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background-color: hsl(199, 25%, 20%);
+    border: 1px solid white;
+    margin-bottom: 2rem;
+}
+
+.navbar > h3 {
+    background-color: inherit;
+}
+
+.nav-links {
+    display: flex;
+    background-color: inherit;
+    gap: 1rem;
+}
+
+.nav-item {
+    text-decoration: none;
+    padding: 0.3rem;
+    background-color: inherit;
+    border-radius: 2px;    
+    transition: 0.3s ease;   
+}
+
+.nav-item:hover {
+
+    background: hsla(74, 100%, 92%, 0.726);
+    color: #2f3436;
+}
+
+.page-title, .page-desc {
+    text-align: center;
+}
