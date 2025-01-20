@@ -8,15 +8,14 @@ const PMPage = () => {
   const [load, setLoad] = useState(false)
   const username = useParams().username
   const navigate = useNavigate()
-  const statText = document.getElementById('statText')
-
+  
   useEffect(() => {
     if (!token) {
       navigate('/login')
       window.location.reload()
     }
   }, [token, navigate])
-
+  
   const checkTokenValidity = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/protected", {
@@ -25,7 +24,7 @@ const PMPage = () => {
           'Authorization': `Bearer ${token}`
         }
       })
-  
+      
       if (res.status == 401) {
         alert("Session Expired, Logging out...")
         navigate("/login")
@@ -41,6 +40,7 @@ const PMPage = () => {
     const websiteName = document.getElementById('websiteName').value
     const websiteUser = document.getElementById('websiteUser').value
     const websitePassword = document.getElementById('websitePassword').value
+    const statText = document.getElementById('statText')
     
     if (websiteName === '' || websiteUser === '' || websitePassword === '') {
       alert("Fill both the fields")
@@ -83,6 +83,7 @@ const PMPage = () => {
   }
   
   const getPasswords = async () => {
+    const statText = document.getElementById('statText')
     if (token == null) {
       alert("Cannot access session token, Logging out...")
       navigate("/login")
