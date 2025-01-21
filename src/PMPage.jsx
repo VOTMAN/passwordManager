@@ -8,7 +8,6 @@ const PMPage = () => {
   const [load, setLoad] = useState(false)
   const username = useParams().username
   const navigate = useNavigate()
-  const statText = document.getElementById('statText')
 
   useEffect(() => {
     if (!token) {
@@ -19,7 +18,7 @@ const PMPage = () => {
 
   const checkTokenValidity = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/protected", {
+      const res = await fetch("/api/protected", {
         method: "GET",
         headers: {
           'Authorization': `Bearer ${token}`
@@ -41,6 +40,8 @@ const PMPage = () => {
     const websiteName = document.getElementById('websiteName').value
     const websiteUser = document.getElementById('websiteUser').value
     const websitePassword = document.getElementById('websitePassword').value
+    const statText = document.getElementById('statText')
+
     
     if (websiteName === '' || websiteUser === '' || websitePassword === '') {
       alert("Fill both the fields")
@@ -55,7 +56,7 @@ const PMPage = () => {
     }
 
     try{
-      const res = await fetch(`http://localhost:5000/api/setPassword`, {
+      const res = await fetch(`/api/setPassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,12 +84,14 @@ const PMPage = () => {
   }
   
   const getPasswords = async () => {
+    const statText = document.getElementById('statText')
+
     if (token == null) {
       alert("Cannot access session token, Logging out...")
       navigate("/login")
     }
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/getPasswords`, {
+      const res = await fetch(`/api/getPasswords`, {
         method:"GET",
         headers:{
           'Authorization': `Bearer ${token}`,

@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
-        "origins": r"http://localhost:5173/*",
+        "origins": [r"http://tauri.localhost/*", r"http://localhost:5173/*"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
@@ -30,7 +30,13 @@ key = str(encrypt_key).encode()
 jwt = JWTManager(app)
 
 def getDbConnection():
-    conn = psycopg2.connect(os.getenv('DB_CONNECTION_URL'))
+    conn = psycopg2.connect(
+        host=os.getenv("DB_HOST"), 
+        dbname=os.getenv("DB_NAME"), 
+        user=os.getenv("DB_USER"), 
+        password=os.getenv("DB_PASS"), 
+        port=os.getenv("DB_PORT"),
+    )
     
     return conn
 
@@ -175,7 +181,7 @@ def getPasswords():
         cur = conn.cursor()
         cipher = Fernet(key)
 
-        cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id))
+        cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id,))
         data = cur.fetchall()
 
         processed = []
