@@ -18,7 +18,7 @@ const PMPage = () => {
   
   const checkTokenValidity = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/protected", {
+      const res = await fetch("http://127.0.0.1:5000/api/protected", {
         method: "GET",
         headers: {
           'Authorization': `Bearer ${token}`
@@ -55,7 +55,7 @@ const PMPage = () => {
     }
 
     try{
-      const res = await fetch(`http://localhost:5000/api/setPassword`, {
+      const res = await fetch(`http://127.0.0.1:5000/api/setPassword`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
