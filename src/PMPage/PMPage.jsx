@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { AuthContext } from './AuthContext'
+import { AuthContext } from '../Context/AuthContext'
 import { useContext, useEffect, useState } from 'react'
 import PassList from './PassList'
+import styles from "./PMPage.module.css"
 
 const PMPage = () => {
   const { token, setPasswords, setToken } = useContext(AuthContext)
@@ -120,23 +121,25 @@ const PMPage = () => {
   setInterval(checkTokenValidity, 60000)
   
   return (
-    <div>
-      <div>
-        <h4>ThePassword Manager</h4>
-        <button onClick={() => setToken(null)}>Log Out</button>
-      </div>
-      <h1>Welcome {username}!</h1>
-      <h3 id='statText'></h3>
-      <div>
-        <h4>Add Password</h4>
-        <input type="text" id="websiteName" placeholder='Enter the website...'/>
-        <input type="text" id="websiteUser" placeholder="Website's username or email"/>
-        <input type="password" id="websitePassword" placeholder='Enter the password...'/>
-        <button onClick={setPassword}>Add Password</button>
-      </div>
-      <button onClick={getPasswords}>Load Passwords</button>
-      {load ? <PassList/> : <p>Press the above button to load the passwords</p>}
+  <div className={styles.container}>
+    <div className={styles.header}>
+      <h4 className={styles.appTitle}>ThePassword Manager</h4>
+      <button onClick={() => setToken(null)} className={styles.logoutButton}>Log Out</button>
     </div>
+    <h1 className={styles.welcomeMessage}>Welcome {username}!</h1>
+  
+    <div className={styles.passwordForm}>
+      <h4>Add Password</h4>
+      <input type="text" id="websiteName" placeholder='Enter the website...' className={styles.inputField} />
+      <input type="text" id="websiteUser" placeholder="Website's username or email" className={styles.inputField} />
+      <input type="password" id="websitePassword" placeholder='Enter the password...' className={styles.inputField} />
+      <button onClick={setPassword} className={styles.addButton}>Add Password</button>
+      <button onClick={getPasswords} className={styles.loadButton}>Load Passwords</button>
+    </div>
+  
+    <h3 id='statText' className={styles.statusText}></h3>
+    {load ? <PassList /> : <p className={styles.infoText}>Press the above button to load the passwords</p>}
+  </div>
   )
 }
 export default PMPage

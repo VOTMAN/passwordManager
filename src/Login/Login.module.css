@@ -1,0 +1,122 @@
+* {
+    background-color: #0c1317;
+    color: antiquewhite;
+}
+
+:root {
+    --text: #e3ecf1;
+    --background: #0c1317;
+    --primary: #9db9cd;
+    --secondary: #6a3650;
+    --accent: #aa6a56;
+}
+  
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 0.3px solid rgba(255, 255, 255, 0.301);
+    margin-bottom: 2rem;
+}
+  
+.navbar > h3 {
+    background-color: inherit;
+}
+
+.navLinks {
+    display: flex;
+    background-color: inherit;
+    gap: 1rem;
+}
+
+.navItem {
+    text-decoration: none;
+    padding: 0.4rem;
+    background-color: inherit;
+    border-radius: 3px;    
+    transition: 0.3s ease;   
+}
+
+.navItem:hover {
+    background: #7697fe;
+    color: #000000;
+}
+  
+
+.loginContainer {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background-color: var(--background);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--text);
+}
+  
+h2 {
+    text-align: center;
+    color: var(--text);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+  
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+  
+.inputGroup {
+    margin-bottom: 15px;
+}
+  
+label {
+    font-size: 14px;
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+  
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: var(--secondary);
+    color: var(--text);
+}
+  
+input:focus {
+    border-color: var(--accent);
+}
+  
+.btnLogin {
+    padding: 12px;
+    background-color: var(--primary);
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+  
+.btnLogin:hover {
+    background-color: var(--accent);
+}
+  
+.statusText {
+    text-align: center;
+    margin-top: 10px;
+}
+  
+.registerLink {
+    color: var(--accent);
+    text-decoration: none;
+}
+  
+.registerLink:hover {
+    text-decoration: underline;
+}

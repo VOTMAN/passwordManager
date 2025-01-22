@@ -1,0 +1,85 @@
+.passwordContainer {
+    padding: 1rem;
+    max-width: fit-content;
+    margin: 0 auto;
+}
+
+.passwordList {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.passwordItem {
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid rgb(175, 172, 172);
+    border-radius: 8px;
+    flex-grow: 1;
+}
+  
+.passwordHeader {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+  
+.passwordHeader h3 {
+    color: #9db9cd;
+    font-size: 16px;
+}
+  
+.passwordHeader h4 {
+    color: #6a3650;
+    font-size: 14px;
+    margin-left: 10px;
+}
+  
+.passwordText {
+    font-size: 18px;
+    color: #e3ecf1;
+    word-wrap: break-word;
+    text-align: center;
+    margin-bottom: 10px;
+}
+  
+.passwordActions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+  
+.toggleButton,
+.copyButton {
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+.toggleButton {
+    background-color: #6a3650;
+    color: white;
+}
+  
+.toggleButton:hover {
+    background-color: #aa6a56;
+}
+  
+.copyButton {
+    background-color: #9db9cd;
+    color: white;
+}
+  
+.copyButton:hover {
+    background-color: #007bff;
+}
+  
+.noPasswordsMessage {
+    text-align: center;
+    font-size: 18px;
+    color: #e3ecf1;
+    margin-top: 20px;
+}

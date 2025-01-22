@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
-import { AuthContext } from "./AuthContext"
+import { AuthContext } from "../Context/AuthContext"
 import { useContext, useEffect } from "react"
+import styles from "./Login.module.css"
 
 const Login = () => {
   const {setToken} = useContext(AuthContext)
@@ -51,22 +52,32 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <>
+    <div className={styles.navbar}>
+      <h3>Logo</h3>
+      <div className={styles.navLinks}>
+        <Link to="/" className={styles.navItem}>Home</Link>
+        <Link to="/Register" className={styles.navItem}>Register</Link>
+        <Link to="/Login" className={styles.navItem}>Login</Link>
+      </div>        
+    </div>    
+    <div className={styles.loginContainer}>
       <h2>Login</h2>
-      <div>
-        <div>
+      <div className={styles.formContainer}>
+        <div className={styles.inputGroup}>
           <label htmlFor="username">Username</label>
-          <input type="text" name="username" id="user-l" />
+          <input type="text" name="username" id="user-l" placeholder="Enter your username" />
         </div>
-        <div>
+        <div className={styles.inputGroup}>
           <label htmlFor="password">Password</label>
-          <input type="password" name="username" id="password-l" />
+          <input type="password" name="password" id="password-l" placeholder="Enter your password" />
         </div>
-        <button id="submit" onClick={handleSubmit}>Login</button>
-        <h4 id="statusText-l">-</h4>
+        <button id="submit" onClick={handleSubmit} className={styles.btnLogin}>Login</button>
+        <h4 id="statusText-l" className={styles.statusText}></h4>
       </div>
-      <h3>Not a user? <Link to='/Register'>Register</Link></h3>
+      <h3>Not a user yet? Signup here - <a href="/Register" className={styles.registerLink}>Register</a></h3>
     </div>
+    </>
   )
 }
 export default Login
