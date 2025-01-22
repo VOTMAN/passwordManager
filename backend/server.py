@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
-        "origins": r"http://localhost:5173/*",
+        "origins": [r"http://localhost:5173/*", r"http://tauri.localhost/*"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
