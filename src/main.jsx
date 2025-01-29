@@ -9,6 +9,7 @@ import NotFoundPage from './NotFoundPage.jsx'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './Context/AuthContext.jsx'
+import { ModeProvider } from './Context/ModeContext.jsx'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
-    <RouterProvider router={router}/>
+    <ModeProvider>
+      <RouterProvider router={router}/>
+    </ModeProvider>
   </AuthProvider>,
 )

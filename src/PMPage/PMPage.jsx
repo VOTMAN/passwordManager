@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
+import { ModeContext } from '../Context/ModeContext'
 import { useContext, useEffect, useState } from 'react'
 import PassList from './PassList'
 import styles from "./PMPage.module.css"
 
 const PMPage = () => {
   const { token, setPasswords, setToken } = useContext(AuthContext)
+  const { darkMode, changeMode } = useContext(ModeContext)
   const [load, setLoad] = useState(false)
   const username = useParams().username
   const navigate = useNavigate()
@@ -123,8 +125,12 @@ const PMPage = () => {
   return (
   <div className={styles.container}>
     <div className={styles.header}>
-      <h4 className={styles.appTitle}>ThePassword Manager</h4>
-      <button onClick={() => setToken(null)} className={styles.logoutButton}>Log Out</button>
+      <h4 className={styles.appTitle}>The Password Manager</h4>
+      <div>
+        <button onClick={() => changeMode(darkMode)} className={styles.logoutButton}>Toggle Mode</button>
+        <button onClick={() => setToken(null)} className={styles.logoutButton}>Log Out</button>
+      </div>
+      
     </div>
     <h1 className={styles.welcomeMessage}>Welcome {username}!</h1>
   
