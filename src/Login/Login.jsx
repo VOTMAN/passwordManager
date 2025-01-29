@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { AuthContext } from "../Context/AuthContext"
 import { useContext, useEffect } from "react"
 import styles from "./Login.module.css"
+import Navbar from "../Nav/Navbar"
 
 const Login = () => {
   const {setToken} = useContext(AuthContext)
@@ -53,14 +54,7 @@ const Login = () => {
 
   return (
     <>
-    <div className={styles.navbar}>
-      <h3>Logo</h3>
-      <div className={styles.navLinks}>
-        <Link to="/" className={styles.navItem}>Home</Link>
-        <Link to="/Register" className={styles.navItem}>Register</Link>
-        <Link to="/Login" className={styles.navItem}>Login</Link>
-      </div>        
-    </div>    
+    <Navbar/>   
     <div className={styles.loginContainer}>
       <h2>Login</h2>
       <div className={styles.formContainer}>

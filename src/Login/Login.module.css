@@ -1,48 +1,19 @@
-* {
-    background-color: #0c1317;
-    color: antiquewhite;
+:root[data-theme="light"] {
+    --text: hsl(0, 0%, 0%);
+    --background: hsl(200, 14%, 96%);
+    --primary: hsl(0, 3%, 6%);
+    --secondary: hsl(222, 39%, 68%);
+    --accent: hsl(210, 50%, 67%);
 }
 
-:root {
-    --text: #e3ecf1;
-    --background: #0c1317;
-    --primary: #9db9cd;
-    --secondary: #6a3650;
-    --accent: #aa6a56;
+:root[data-theme="dark"] {
+    --text: hsl(0, 0%, 100%);
+    --background: hsl(200, 14%, 4%);
+    --primary: hsl(0, 3%, 94%);
+    --secondary: hsl(222, 39%, 32%);
+    --accent: hsl(210, 50%, 33%);
 }
   
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    border-bottom: 0.3px solid rgba(255, 255, 255, 0.301);
-    margin-bottom: 2rem;
-}
-  
-.navbar > h3 {
-    background-color: inherit;
-}
-
-.navLinks {
-    display: flex;
-    background-color: inherit;
-    gap: 1rem;
-}
-
-.navItem {
-    text-decoration: none;
-    padding: 0.4rem;
-    background-color: inherit;
-    border-radius: 3px;    
-    transition: 0.3s ease;   
-}
-
-.navItem:hover {
-    background: #7697fe;
-    color: #000000;
-}
-  
-
 .loginContainer {
     max-width: 400px;
     margin: 50px auto;
@@ -50,7 +21,7 @@
     border: 1px solid var(--primary);
     border-radius: 8px;
     background-color: var(--background);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 10px 20px var(--accent);
     color: var(--text);
 }
   
@@ -94,8 +65,8 @@ input:focus {
   
 .btnLogin {
     padding: 12px;
-    background-color: var(--primary);
-    color: var(--text);
+    background-color: var(--text);
+    color: var(--background);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -104,6 +75,7 @@ input:focus {
 }
   
 .btnLogin:hover {
+    color: var(--text);
     background-color: var(--accent);
 }
   

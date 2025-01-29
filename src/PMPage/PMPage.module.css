@@ -1,10 +1,25 @@
+:root[data-theme="light"] {
+  --text: hsl(0, 0%, 0%);
+  --background: hsl(200, 14%, 96%);
+  --primary: hsl(0, 3%, 6%);
+  --secondary: hsl(222, 39%, 68%);
+  --accent: hsl(210, 50%, 67%);
+}
+
+:root[data-theme="dark"] {
+  --text: hsl(0, 0%, 100%);
+  --background: hsl(200, 14%, 4%);
+  --primary: hsl(0, 3%, 94%);
+  --secondary: hsl(222, 39%, 32%);
+  --accent: hsl(210, 50%, 33%);
+}
+
 .container {
   max-width: 1000px;
   margin: 0 auto;
   border-radius: 8px;
-  border: 1px solid white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  color: #e3ecf1;
+  border: 1px solid var(--primary);
+  box-shadow: 1px 4px 12px var(--accent);
   padding: 1rem; 
 }
 
@@ -13,20 +28,22 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--accent);
   margin-bottom: 1.8rem;
 }
 
 .appTitle {
   font-size: 24px;
   font-weight: bold;
-  color: #9db9cd;
+  color: var(--text);
 }
 
 .logoutButton {
   padding: 8px 16px;
-  background-color: #6a3650;
-  color: #e3ecf1;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  background-color: var(--accent);
+  color: var(--background);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -34,14 +51,15 @@
 }
 
 .logoutButton:hover {
-  background-color: #aa6a56;
+  background-color: var(--secondary);
+  color: var(--text);
 }
 
 .welcomeMessage {
   text-align: center;
   font-size: 32px;
   margin-bottom: 20px;
-  color: #9db9cd;
+  color: var(--primary);
 }
 
 .statusText {
@@ -59,7 +77,7 @@
 .passwordForm h4 {
   font-size: 22px;
   margin-bottom: 10px;
-  color: #9db9cd;
+  color: var(--text);
 }
 
 .inputField {
@@ -67,23 +85,23 @@
   padding: 12px;
   margin-bottom: 15px;
   font-size: 14px;
-  border: 1px solid #9db9cd;
+  border: 1px solid var(--accent);
   border-radius: 5px;
-  background-color: #2c2f3a;
-  color: #e3ecf1;
+  background-color: var(--background);
+  color: var(--text);
   transition: border-color 0.3s ease;
 }
 
 .inputField:focus {
-  border-color: #aa6a56;
+  border-color: var(--secondary);
 }
 
 .addButton {
   width: 100%;
   padding: 12px;
   font-size: 16px;
-  background-color: #6a3650;
-  color: #e3ecf1;
+  background-color: var(--primary);
+  color: var(--background);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -91,13 +109,14 @@
 }
 
 .addButton:hover {
-  background-color: #aa6a56;
+  background-color: var(--secondary);
+  color: var(--background);
 }
 
 .loadButton {
   padding: 12px 20px;
-  background-color: #9db9cd;
-  color: #1e212d;
+  background-color: var(--secondary);
+  color: var(--text);
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -108,12 +127,13 @@
 }
 
 .loadButton:hover {
-  background-color: #007bff;
+  background-color: var(--primary);
+  color: var(--secondary);
 }
 
 .infoText {
   text-align: center;
-  color: #e3ecf1;
+  color: var(--text);
   font-size: 18px;
 }
 

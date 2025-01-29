@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import styles from './Register.module.css'
+import Navbar from "../Nav/Navbar"
 
 const Register = () => {
   const handleSubmit = async (e) => {
@@ -54,14 +55,7 @@ const Register = () => {
 
   return (
   <>
-  <div className={styles.navbar}>
-    <h3>Logo</h3>
-    <div className={styles.navLinks}>
-      <Link to="/" className={styles.navItem}>Home</Link>
-      <Link to="/Register" className={styles.navItem}>Register</Link>
-      <Link to="/Login" className={styles.navItem}>Login</Link>
-    </div>        
-  </div>      
+  <Navbar/>    
   <div class={styles.registerContainer}>
     <h2>Register</h2>
     <div class={styles.formContainer}>
