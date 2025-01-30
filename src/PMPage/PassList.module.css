@@ -67,7 +67,8 @@
 }
   
 .toggleButton,
-.copyButton {
+.copyButton,
+.deleteButton {
     padding: 10px 15px;
     font-size: 14px;
     cursor: pointer;
@@ -95,9 +96,18 @@
     color: var(--background);
 }
   
+.deleteButton {
+    background-color: red;
+    color:white;
+}
+
+.deleteButton:hover {
+    background-color: rgb(151, 13, 13);
+}
+
 .noPasswordsMessage {
     text-align: center;
     font-size: 18px;
-    color: #e3ecf1;
+    color: var(--text);
     margin-top: 20px;
 }
