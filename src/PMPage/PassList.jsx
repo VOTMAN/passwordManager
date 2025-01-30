@@ -3,10 +3,11 @@ import { AuthContext } from "../Context/AuthContext"
 import { useLocation } from "react-router-dom"
 import styles from "./PassList.module.css"
 
-const PassList = () => {
-  const { passwords, setPasswords } = useContext(AuthContext)
+const PassList = (props) => {
+  const { passwords, setPasswords, deletePasswords } = useContext(AuthContext)
   const [visiblePasswords, setVisiblePasswords] = useState(passwords.map(() => false))
 
+  const dp = props.deletePassword
   const location = useLocation()
   useEffect(() => {
         return () => {
@@ -38,6 +39,7 @@ const PassList = () => {
               <button className={styles.copyButton} onClick={() => {navigator.clipboard.writeText(password[3]); alert('Copied')}}>
                 Copy to Clipboard
               </button>
+              <button className={styles.deleteButton} onClick={() => dp(password[0])}>Delete</button>
             </div>
           </li>
         )) 

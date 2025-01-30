@@ -50,7 +50,7 @@ const PMPage = () => {
       return
     }
     
-    
+
     const wsd = {
       websiteName,
       websiteUser,
@@ -106,6 +106,7 @@ const PMPage = () => {
         return
       }
 
+      console.log(data.data)
       setPasswords(data.data)
       setLoad(true)
 
@@ -118,6 +119,40 @@ const PMPage = () => {
     }
   }
 
+  const deletePassword = async (idx) => {
+    const statText = document.getElementById('statText')
+    if (token == null) {
+      alert("Cannot access session token, Logging out...")
+      navigate("/login")
+    }
+    console.log(idx)
+    try {
+      const res = await fetch("http://127.0.0.1:5000/api/deletePassword", {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(idx)
+      })
+
+      const data = await res.json()
+      if (!res.ok) {
+        statText.style.color = 'red'
+        statText.innerText = data.error
+        return
+      }
+
+      
+      console.log(data)
+      statText.style.color = 'green'
+      statText.innerText = data.message
+      setLoad(false)
+    } catch (error) {
+      statText.style.color = 'red'
+      statText.innerText = err.message
+    }
+  }
 
   // checkTokenValidity()
   setInterval(checkTokenValidity, 60000)
@@ -144,7 +179,7 @@ const PMPage = () => {
     </div>
   
     <h3 id='statText' className={styles.statusText}></h3>
-    {load ? <PassList /> : <p className={styles.infoText}>Press the above button to load the passwords</p>}
+    {load ? <PassList deletePassword={deletePassword}/> : <p className={styles.infoText}>Press the above button to load the passwords</p>}
   </div>
   )
 }

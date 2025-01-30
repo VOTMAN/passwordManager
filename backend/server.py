@@ -1,5 +1,5 @@
 import os
-import bcrypt 
+import bcrypt
 from cryptography.fernet import Fernet
 import psycopg2
 from datetime import timedelta
@@ -197,6 +197,33 @@ def getPasswords():
         cur.close()
         conn.close()
 
+@app.route("/api/deletePassword", methods=['DELETE'])
+@jwt_required()
+def deletePassword():
+    try:
+        conn = getDbConnection()
+        cur = conn.cursor()
+
+        to_be_deleted_id = request.json
+
+        cur.execute("SELECT * FROM passwords WHERE id = %s", (to_be_deleted_id,))
+        passExists = cur.fetchone()
+
+        if not passExists:
+            return jsonify({"error": "Password does not exist"}), 401
+
+        cur.execute("DELETE FROM passwords WHERE id = %s", (to_be_deleted_id,))
+        conn.commit()
+
+        return jsonify({"message": "Password Deleted"}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Internal Server Error"}), 500
+    
+    finally:
+        cur.close()
+        conn.close()
 
 if __name__ == "__main__":
     app.run(debug=True)
