@@ -14,6 +14,7 @@ node_modules
 dist
 dist-ssr
 *.local
+/backend/my-venv
 
 # Editor directories and files
 .vscode/*

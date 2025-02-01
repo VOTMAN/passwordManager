@@ -1,10 +1,10 @@
 import os
-import bcrypt 
+import bcrypt
 from cryptography.fernet import Fernet
 import psycopg2
 from datetime import timedelta
 from flask import Flask, jsonify, request
-from flask_cors import CORS 
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 
@@ -197,6 +197,5 @@ def getPasswords():
         cur.close()
         conn.close()
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
