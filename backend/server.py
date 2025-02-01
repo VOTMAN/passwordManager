@@ -132,7 +132,7 @@ def loginUsers():
         return jsonify({"error": "Login Failed"}), 401
     
     except Exception as e:
-        return jsonify({"error": "Internal Server Error"})
+        return jsonify({"error": "Internal Server Error"}), 500
     
     finally:
         cur.close()

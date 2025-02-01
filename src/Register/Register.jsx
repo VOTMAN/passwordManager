@@ -4,6 +4,7 @@ import styles from './Register.module.css'
 import Navbar from "../Nav/Navbar"
 
 const Register = () => {
+  const baseurl = import.meta.env.VITE_BASE_URL
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = String(document.getElementById('user-r').value).trim()
@@ -27,7 +28,7 @@ const Register = () => {
     }
     
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/reg", {
+      const res = await fetch(`${baseurl}/api/api/reg`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
