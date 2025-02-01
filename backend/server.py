@@ -5,14 +5,14 @@ import psycopg2
 from datetime import timedelta
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 
 app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
-        "origins": [r"http://tauri.localhost/*", r"http://localhost:5173/*"],
+        "origins": r"http://localhost:5173/*",
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
@@ -37,7 +37,8 @@ def getDbConnection():
         password=os.getenv("DB_PASS"), 
         port=os.getenv("DB_PORT"),
     )
-    
+
+
     return conn
 
 def createTables():
@@ -79,7 +80,7 @@ def registerUsers():
             return jsonify({"error": "Username and password are required"}), 400
         
         
-        cur.execute("SELECT username FROM users WHERE username = %s", (username,))
+        cur.execute("SELECT username from users WHERE username = %s", (username,))
         user_exists = cur.fetchone()
         
         if user_exists:
@@ -102,7 +103,6 @@ def registerUsers():
 @app.route("/api/login", methods=["POST"])
 
 def loginUsers():
-
     try:
         createTables()
         data = request.json
@@ -183,7 +183,6 @@ def getPasswords():
 
         cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id,))
         data = cur.fetchall()
-
         processed = []
         for item in data:
             new_item = list(item)
@@ -192,11 +191,11 @@ def getPasswords():
 
         return jsonify({"message": "Passwords Retrieved", "data": processed}), 200
     except Exception as e:
-        return jsonify({"error" : "Internal Server Error", "details": e}), 500
+        print(e)
+        return jsonify({"error" : "Internal Server Error"}), 500
     finally:
         cur.close()
         conn.close()
 
-
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host="0.0.0.0")

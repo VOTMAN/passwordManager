@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-
+import styles from './Register.module.css'
+import Navbar from "../Nav/Navbar"
 
 const Register = () => {
+  const baseurl = import.meta.env.VITE_BASE_URL
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = String(document.getElementById('user-r').value).trim()
@@ -26,7 +28,7 @@ const Register = () => {
     }
     
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/reg", {
+      const res = await fetch(`${baseurl}/api/api/reg`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,29 +55,30 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <h2>Register</h2>
-      <div>
-        <div>
-          <label htmlFor="name">Username</label>
-          <input type="text" name="username" id="user-r" />
-        </div>
-        <br/>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="pass-r" />
-        </div>
-        <br/>
-        <div>
-          <label htmlFor="password">Re-Enter Password</label>
-          <input type="password" name="password" id="repass-r" />
-        </div>
-        <br/>
-        <button onClick={handleSubmit}>Register</button>
-        <h4 id="statusText-r"></h4>
+  <>
+  <Navbar/>    
+  <div class={styles.registerContainer}>
+    <h2>Register</h2>
+    <div class={styles.formContainer}>
+      <div class={styles.inputGroup}>
+        <label htmlFor="user-r">Username</label>
+        <input type="text" name="username" id="user-r" placeholder="Enter your username" />
       </div>
-      <h3>Already a user? Go to the <Link to='/Login'>Login Page</Link></h3>
+      <div class={styles.inputGroup}>
+        <label htmlFor="pass-r">Password</label>
+        <input type="password" name="password" id="pass-r" placeholder="Enter your password" />
+      </div>
+      <div class={styles.inputGroup}>
+        <label htmlFor="repass-r">Re-Enter Password</label>
+        <input type="password" name="repassword" id="repass-r" placeholder="Re-enter your password" />
+      </div>
+      <button onClick={handleSubmit} class={styles.btnRegister}>Register</button>
+      <h4 id="statusText-r" class={styles.statusText}></h4>
     </div>
+  <h3>Already a user? Go to the <a href="/Login" class={styles.loginLink}>Login Page</a></h3>
+  </div>
+  </>
+
   )
 }
 export default Register

@@ -1,0 +1,95 @@
+:root[data-theme="light"] {
+  --text: hsl(0, 0%, 0%);
+  --background: hsl(200, 14%, 96%);
+  --primary: hsl(0, 3%, 6%);
+  --secondary: hsl(222, 39%, 68%);
+  --accent: hsl(210, 50%, 67%);
+}
+
+:root[data-theme="dark"] {
+  --text: hsl(0, 0%, 100%);
+  --background: hsl(200, 14%, 4%);
+  --primary: hsl(0, 3%, 94%);
+  --secondary: hsl(222, 39%, 32%);
+  --accent: hsl(210, 50%, 33%);
+}
+  
+.registerContainer {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background-color: var(--background);
+  box-shadow: 0px 10px 20px var(--accent);
+}
+
+h2 {
+  text-align: center;
+  color: var(--text);
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid var(--primary);
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+input:focus {
+  border-color: var(--accent);
+}
+
+.btnRegister {
+  padding: 12px;
+  margin-top: 10px;
+  color: var(--background);
+  background-color: var(--primary);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btnRegister:hover {
+  color: var(--text);
+  background-color: var(--accent);
+}
+
+.statusText {
+  text-align: center;
+  color: #ff0000;
+  margin-top: 10px;
+}
+
+.loginLink {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.loginLink:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,113 @@
+:root[data-theme="light"] {
+    --text: hsl(0, 0%, 0%);
+    --background: hsl(200, 14%, 96%);
+    --primary: hsl(0, 3%, 6%);
+    --secondary: hsl(216, 28%, 66%);
+    --accent: hsl(210, 50%, 67%);
+}
+  
+:root[data-theme="dark"] {
+    --text: hsl(0, 0%, 87%);
+    --background: hsl(200, 14%, 4%);
+    --primary: hsl(0, 0%, 83%);
+    --secondary: hsl(222, 39%, 32%);
+    --accent: hsl(210, 50%, 33%);
+}
+
+.passwordContainer {
+    padding: 1rem;
+    max-width: fit-content;
+    margin: 0 auto;
+}
+
+.passwordList {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.passwordItem {
+    margin: 10px;
+    padding: 15px;
+    max-width: 80vw;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    flex-grow: 1;
+}
+  
+.passwordHeader {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+  
+.passwordHeader h3 {
+    color: var(--accent);
+    font-size: 16px;
+}
+  
+.passwordHeader h4 {
+    color: var(--text);
+    font-size: 14px;
+    margin-left: 10px;
+}
+  
+.passwordText {
+    font-size: 18px;
+    color: var(--text);
+    word-wrap: break-word;
+    text-align: center;
+    margin-bottom: 10px;
+}
+  
+.passwordActions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+  
+.toggleButton,
+.copyButton,
+.deleteButton {
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+  
+.toggleButton {
+    background-color: var(--secondary);
+    color: white;
+}
+  
+.toggleButton:hover {
+    background-color: #102553;
+}
+  
+.copyButton {
+    background-color: var(--accent);
+    color: var(--text);
+}
+  
+.copyButton:hover {
+    background-color: var(--primary);
+    color: var(--background);
+}
+  
+.deleteButton {
+    background-color: red;
+    color:white;
+}
+
+.deleteButton:hover {
+    background-color: rgb(151, 13, 13);
+}
+
+.noPasswordsMessage {
+    text-align: center;
+    font-size: 18px;
+    color: var(--text);
+    margin-top: 20px;
+}

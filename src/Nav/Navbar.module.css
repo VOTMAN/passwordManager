@@ -1,0 +1,63 @@
+:root[data-theme="light"] {
+    --text: hsl(0, 0%, 0%);
+    --background: hsl(200, 14%, 96%);
+    --primary: hsl(0, 3%, 6%);
+    --secondary: hsl(222, 39%, 68%);
+    --accent: hsl(210, 50%, 67%);
+}
+
+:root[data-theme="dark"] {
+    --text: hsl(0, 0%, 100%);
+    --background: hsl(200, 14%, 4%);
+    --primary: hsl(0, 3%, 94%);
+    --secondary: hsl(222, 39%, 32%);
+    --accent: hsl(210, 50%, 33%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    transition: 0.3s ease-in all;
+}
+
+
+.themeBtn {
+    padding: 12px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 0.3px solid var(--primary);
+    margin-bottom: 2rem;
+}
+
+.navLinks {
+    display: flex;
+    background-color: var(--background);
+    align-items: center;
+    gap: 1rem;
+}
+
+.navItem {
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: var(--background);
+    border-radius: 3px;    
+    transition: 0.3s ease;   
+}
+
+.navItem:hover {
+    background: var(--accent);
+    color: var(--text);
+}
