@@ -5,6 +5,7 @@ import styles from "./Login.module.css"
 import Navbar from "../Nav/Navbar"
 
 const Login = () => {
+  const baseurl = import.meta.env.VITE_BASE_URL
   const {setToken} = useContext(AuthContext)
   const navigate = useNavigate()
   
@@ -18,28 +19,28 @@ const Login = () => {
       alert("Fill all the fields")
       return
     }
-
+    
     const userData = {
       username,
       password
     }
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/login", {
+      const res = await fetch(`${baseurl}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData)
       })
-
+      
       const data = await res.json()
       if (!res.ok) {
         statText.style.color = "red"
         statText.innerText = data.error
         return
       }
-
+      
       const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
@@ -51,7 +52,7 @@ const Login = () => {
       statText.innerText = "Server Down, Try Again Later"
     }
   }
-
+  
   return (
     <>
     <Navbar/>   
