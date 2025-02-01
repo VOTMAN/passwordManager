@@ -4,7 +4,7 @@ from cryptography.fernet import Fernet
 import psycopg2
 from datetime import timedelta
 from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask_cors import CORS 
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
-        "origins": r"http://localhost:5173/*",
+        "origins": [r"http://localhost:5173/*", r"http://tauri.localhost/*"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
@@ -132,7 +132,7 @@ def loginUsers():
         return jsonify({"error": "Login Failed"}), 401
     
     except Exception as e:
-        return jsonify({"error": "Internal Server Error"})
+        return jsonify({"error": "Internal Server Error"}), 500
     
     finally:
         cur.close()
@@ -193,6 +193,34 @@ def getPasswords():
     except Exception as e:
         print(e)
         return jsonify({"error" : "Internal Server Error"}), 500
+    finally:
+        cur.close()
+        conn.close()
+
+@app.route("/api/deletePassword", methods=['DELETE'])
+@jwt_required()
+def deletePassword():
+    try:
+        conn = getDbConnection()
+        cur = conn.cursor()
+
+        to_be_deleted_id = request.json
+
+        cur.execute("SELECT * FROM passwords WHERE id = %s", (to_be_deleted_id,))
+        passExists = cur.fetchone()
+
+        if not passExists:
+            return jsonify({"error": "Password does not exist"}), 401
+
+        cur.execute("DELETE FROM passwords WHERE id = %s", (to_be_deleted_id,))
+        conn.commit()
+
+        return jsonify({"message": "Password Deleted"}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"error": "Internal Server Error"}), 500
+    
     finally:
         cur.close()
         conn.close()
