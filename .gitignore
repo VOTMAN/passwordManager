@@ -26,5 +26,4 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-src-tauri
 *.sw?
