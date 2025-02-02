@@ -11,8 +11,8 @@ const Login = () => {
   
   const handleSubmit = async (e) => {
     
-    const username = document.getElementById("user-l").value
-    const password = document.getElementById("password-l").value
+    const username = (document.getElementById("user-l").value).trim()
+    const password = (document.getElementById("password-l").value).trim()    
     let statText = document.getElementById("statusText-l")
     
     if (username === '' || password === '') {
