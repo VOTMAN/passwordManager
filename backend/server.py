@@ -194,7 +194,7 @@ def deletePassword():
     conn = getDbConn()
     with conn.cursor() as cur:
         try:
-            to_be_deleted_id = request.json.get("id")
+            to_be_deleted_id = request.json
             cur.execute("SELECT * FROM passwords WHERE id = %s", (to_be_deleted_id,))
             passExists = cur.fetchone()
 
@@ -209,10 +209,6 @@ def deletePassword():
         except Exception as e:
             print(e)
             return jsonify({"error": "Internal Server Error"}), 500
-        
-        finally:
-            cur.close()
-            conn.close()
-
+                   
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
