@@ -8,8 +8,8 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = String(document.getElementById('user-r').value).trim()
-    const password = document.getElementById('pass-r').value
-    const repass = document.getElementById('repass-r').value
+    const password = (document.getElementById('pass-r').value).trim()
+    const repass = (document.getElementById('repass-r').value).trim()
     const statText = document.getElementById('statusText-r')
     
     if (!username || !password || !repass) {
