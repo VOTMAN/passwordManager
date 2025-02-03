@@ -28,7 +28,7 @@ const Register = () => {
     }
     
     try {
-      const res = await fetch(`${baseurl}/api/api/reg`, {
+      const res = await fetch(`${baseurl}/api/reg`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,8 +46,7 @@ const Register = () => {
       const data = await res.json()
       statText.style.color = 'green'
       statText.innerText = data.message
-      alert("User Created")
-      
+            
     } catch (error) {
       statText.style.color = "blue"
       statText.innerText = "Server Down, Try Again Later" 
