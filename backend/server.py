@@ -111,9 +111,6 @@ def loginUsers():
             username = data.get("username")
             password = data.get("password")
 
-            # conn = getDbConnection()
-            # cur = conn.cursor()
-
             cur.execute("SELECT id, username FROM users WHERE username = %s", (username,))
             userExists = cur.fetchone()
 
