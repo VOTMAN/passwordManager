@@ -3,16 +3,17 @@ import { AuthContext } from "../Context/AuthContext"
 import { useContext, useEffect } from "react"
 import styles from "./Login.module.css"
 import Navbar from "../Nav/Navbar"
+import { ServerContext } from "../Context/ServerContext"
 
 const Login = () => {
-  const baseurl = import.meta.env.VITE_BASE_URL
   const {setToken} = useContext(AuthContext)
+  const {server} = useContext(ServerContext)
+  const baseurl = localStorage.getItem("server_url") || server
   const navigate = useNavigate()
   
-  const handleSubmit = async (e) => {
-    
-    const username = (document.getElementById("user-l").value).trim()
-    const password = (document.getElementById("password-l").value).trim()    
+  const handleSubmit = async () => {
+    const username = document.getElementById("user-l").value
+    const password = document.getElementById("password-l").value
     let statText = document.getElementById("statusText-l")
     
     if (username === '' || password === '') {
