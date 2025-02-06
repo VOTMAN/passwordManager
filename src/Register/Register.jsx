@@ -1,10 +1,12 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useContext } from "react"
 import styles from './Register.module.css'
 import Navbar from "../Nav/Navbar"
+import { ServerContext } from "../Context/ServerContext"
 
 const Register = () => {
-  const baseurl = import.meta.env.VITE_BASE_URL
+  const {server} = useContext(ServerContext)
+  const baseurl = localStorage.getItem("server_url") || server
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = String(document.getElementById('user-r').value).trim()
