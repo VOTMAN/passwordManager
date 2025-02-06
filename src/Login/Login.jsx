@@ -12,7 +12,6 @@ const Login = () => {
   const navigate = useNavigate()
   
   const handleSubmit = async () => {
-    console.log(baseurl)  
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
     let statText = document.getElementById("statusText-l")

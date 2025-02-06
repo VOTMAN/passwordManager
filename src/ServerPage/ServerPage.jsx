@@ -16,7 +16,7 @@ const ServerPage = () => {
             <input type="text" placeholder="Enter Server Url..." id="server-url"/>
             <button onClick={() => handleUserServer(document.querySelector("#server-url").value)}>Submit</button>
             <button onClick={() => handleUserServer("http://127.0.0.1:5000")}>Reset</button>
-            <p>default is 127.0.0.1:5000</p>
+            <p>default is http://127.0.0.1:5000: Enter your url with http://yourserverurl. it will always run on port 5000</p>
         </div>
     )
 }
