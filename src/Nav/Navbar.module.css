@@ -21,7 +21,7 @@
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: var(--background);
     color: var(--text);
-    transition: 0.3s ease-in all;
+    transition: 0.3s ease-in-out all;
 }
 
 
@@ -44,15 +44,16 @@
 
 .navLinks {
     display: flex;
-    background-color: var(--background);
+    /* background-color: var(--background); */
     align-items: center;
     gap: 1rem;
 }
 
-.navItem {
+.navItem,
+.menu {
     text-decoration: none;
     padding: 0.5rem;
-    background-color: var(--background);
+    /* background-color: var(--background); */
     border-radius: 3px;    
     transition: 0.3s ease;   
 }
@@ -60,4 +61,54 @@
 .navItem:hover {
     background: var(--accent);
     color: var(--text);
+}
+
+.menu {
+    display: none;
+    border: none
+}
+
+.navLinkSmallScreen {
+    display: none;
+    width: 0%;
+}
+
+@media only screen and (max-width: 750px) {
+    .navLinks {
+        display: none
+    }
+    
+    .menu {
+        display: block;
+        font-size: larger;
+    }
+
+    .navItem {
+        padding: 15px 0;
+        margin-top: 1rem 0;
+        width: 30%;
+    }
+
+    .themeBtn {
+        margin: 0.5rem 0;
+        padding: 1rem;
+    }
+
+    .navLinkSmallScreen {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        height: 100%;
+        padding-top: 20%;
+        opacity: 90%;
+        align-items: center;
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        right: 0;
+        overflow: hidden;
+        background-color: var(--background);
+        transition: 0.25s ease-in-out;
+    }
+
 }

@@ -1,12 +1,15 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../Context/AuthContext'
 import { ModeContext } from '../Context/ModeContext'
+import { ServerContext } from '../Context/ServerContext'
 import { useContext, useEffect, useState } from 'react'
 import PassList from './PassList'
 import styles from "./PMPage.module.css"
 
 const PMPage = () => {
-  const baseurl = import.meta.env.VITE_BASE_URL
+  const {server} = useContext(ServerContext)
+  const baseurl = localStorage.getItem("server_url") || server  
+
   const { token, setPasswords, setToken } = useContext(AuthContext)
   const { darkMode, changeMode } = useContext(ModeContext)
   const [load, setLoad] = useState(false)
@@ -21,23 +24,18 @@ const PMPage = () => {
   }, [token, navigate])
   
   const checkTokenValidity = async () => {
-    try {
-      const res = await fetch(`${baseurl}/api/protected`, {
-        method: "GET",
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      
-      if (res.status == 401) {
-        alert("Session Expired, Logging out...")
-        navigate("/login")
-        window.location.reload()
+    const res = await fetch(`${baseurl}/api/protected`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${token}`
       }
-    } catch (err) {
-      statText.style.color = 'red'
-      statText.innerText = err.message
-    }
+    })
+    
+    if (res.status == 401) {
+      alert("Session Expired, Logging out...")
+      navigate("/login")
+      window.location.reload()
+    }    
   }
 
   const setPassword = async () => {
@@ -107,7 +105,6 @@ const PMPage = () => {
         return
       }
 
-      console.log(data.data)
       setPasswords(data.data)
       setLoad(true)
 
@@ -126,7 +123,7 @@ const PMPage = () => {
       alert("Cannot access session token, Logging out...")
       navigate("/login")
     }
-    console.log(idx)
+
     try {
       const res = await fetch(`${baseurl}/api/deletePassword`, {
         method: "DELETE",
@@ -145,11 +142,10 @@ const PMPage = () => {
       }
 
       
-      console.log(data)
       statText.style.color = 'green'
       statText.innerText = data.message
       setLoad(false)
-    } catch (error) {
+    } catch (err) {
       statText.style.color = 'red'
       statText.innerText = err.message
     }
