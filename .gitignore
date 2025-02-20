@@ -15,6 +15,7 @@ dist
 dist-ssr
 *.local
 /backend/my-venv
+/backend/pwman
 
 # Editor directories and files
 .vscode/*

@@ -164,17 +164,18 @@ def setPassword():
             return jsonify({"message": "Password Inserted"}), 201
         
         except Exception as e:
-            return jsonify({"error" : "Internal Server Error", "details": e}), 500
+            print(e)
+            return jsonify({"error" : "Internal Server Error"}), 500
         
 
 @app.route("/api/getPasswords", methods=['GET'])
 @jwt_required()
 def getPasswords():
     conn = getDbConn()
+    user_id = get_jwt_identity()
+    cipher = Fernet(key)
     with conn.cursor() as cur:
         try:
-            user_id = get_jwt_identity()
-            cipher = Fernet(key)
             cur.execute("SELECT id, website, w_user, password FROM passwords WHERE user_id = %s", (user_id,))
             data = cur.fetchall()
             processed = []
