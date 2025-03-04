@@ -1,3 +1,25 @@
+* {
+}
+
 .pageTextCenter {
     text-align: center;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+
+
+.banner {
+    display: flex;
+    justify-self: center;
+    position: relative;
+    width: 95%;
+    height: 300px;
+    border-radius: 20px;
+    background: rgb(103,81,185);
+    background: radial-gradient(circle, rgba(103,81,185,1) 0%, rgba(244,110,110,1) 50%, rgba(125,180,181,1) 100%);
+    margin: 2rem 0;
 }
