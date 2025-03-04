@@ -1,3 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    transition: 0.3s ease-in-out all;
+}
+
 :root[data-theme="light"] {
     --text: hsl(0, 0%, 0%);
     --background: hsl(200, 14%, 96%);
@@ -12,16 +22,6 @@
     --primary: hsl(0, 3%, 94%);
     --secondary: hsl(222, 39%, 32%);
     --accent: hsl(210, 50%, 33%);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: var(--background);
-    color: var(--text);
-    transition: 0.3s ease-in-out all;
 }
 
 

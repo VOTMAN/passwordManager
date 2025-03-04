@@ -7,7 +7,8 @@ const Home = () => {
     <div>
       <Navbar/>
       <h1 className={styles.pageTextCenter}>The Password Manager</h1>
-      <p className={styles.pageTextCenter}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ullam velit veritatis, aspernatur laudantium non aliquid ratione reprehenderit omnis possimus porro consequatur dolorem consequuntur dolore dolorum itaque facilis quaerat beatae.</p>      
+      <h4 className={styles.pageTextCenter}>A password manager build with your privacy in mind</h4>      
+      <div className={styles.banner}></div>  
     </div>
   )
 }
