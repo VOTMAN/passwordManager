@@ -11,7 +11,8 @@ const Login = () => {
   const baseurl = localStorage.getItem("server_url") || server
   const navigate = useNavigate()
   
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
     let statText = document.getElementById("statusText-l")
@@ -59,7 +60,7 @@ const Login = () => {
     <Navbar/>   
     <div className={styles.loginContainer}>
       <h2>Login</h2>
-      <div className={styles.formContainer}>
+      <form className={styles.formContainer}>
         <div className={styles.inputGroup}>
           <label htmlFor="username">Username</label>
           <input type="text" name="username" id="user-l" placeholder="Enter your username" />
@@ -70,7 +71,7 @@ const Login = () => {
         </div>
         <button id="submit" onClick={handleSubmit} className={styles.btnLogin}>Login</button>
         <h4 id="statusText-l" className={styles.statusText}></h4>
-      </div>
+      </form>
       <h3>Not a user yet? Signup here - <a href="/Register" className={styles.registerLink}>Register</a></h3>
     </div>
     </>

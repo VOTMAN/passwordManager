@@ -60,7 +60,7 @@ const Register = () => {
   <Navbar/>    
   <div className={styles.registerContainer}>
     <h2>Register</h2>
-    <div className={styles.formContainer}>
+    <form className={styles.formContainer}>
       <div className={styles.inputGroup}>
         <label htmlFor="user-r">Username</label>
         <input type="text" name="username" id="user-r" placeholder="Enter your username" />
@@ -75,7 +75,7 @@ const Register = () => {
       </div>
       <button onClick={handleSubmit} className={styles.btnRegister}>Register</button>
       <h4 id="statusText-r" className={styles.statusText}></h4>
-    </div>
+    </form>
   <h3>Already a user? Go to the <a href="/Login" className={styles.loginLink}>Login Page</a></h3>
   </div>
   </>

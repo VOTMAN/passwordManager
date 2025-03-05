@@ -18,6 +18,7 @@ const PMPage = () => {
   
   useEffect(() => {
     if (!token) {
+      setPasswords([])
       navigate('/login')
       window.location.reload()
     }
@@ -33,12 +34,14 @@ const PMPage = () => {
     
     if (res.status == 401) {
       alert("Session Expired, Logging out...")
+      setPasswords([])
       navigate("/login")
       window.location.reload()
     }    
   }
 
-  const setPassword = async () => {
+  const setPassword = async (e) => {
+    e.preventDefault()
     const websiteName = document.getElementById('websiteName').value
     const websiteUser = document.getElementById('websiteUser').value
     const websitePassword = document.getElementById('websitePassword').value
@@ -76,8 +79,9 @@ const PMPage = () => {
       statText.style.color = 'green'
       statText.innerText = data.message
       
-      
       setLoad(false)
+      getPasswords()
+      
     } catch (err) {
       statText.style.color = 'red'
       statText.innerText = err.message
@@ -119,10 +123,7 @@ const PMPage = () => {
 
   const deletePassword = async (idx) => {
     const statText = document.getElementById('statText')
-    if (token == null) {
-      alert("Cannot access session token, Logging out...")
-      navigate("/login")
-    }
+    
 
     try {
       const res = await fetch(`${baseurl}/api/deletePassword`, {
@@ -144,7 +145,9 @@ const PMPage = () => {
       
       statText.style.color = 'green'
       statText.innerText = data.message
-      setLoad(false)
+
+      getPasswords()
+
     } catch (err) {
       statText.style.color = 'red'
       statText.innerText = err.message
@@ -166,12 +169,14 @@ const PMPage = () => {
     </div>
     <h1 className={styles.welcomeMessage}>Welcome {username}!</h1>
   
-    <div className={styles.passwordForm}>
+    <form className={styles.passwordForm}>
       <h4>Add Password</h4>
       <input type="text" id="websiteName" placeholder='Enter the website...' className={styles.inputField} />
       <input type="text" id="websiteUser" placeholder="Website's username or email" className={styles.inputField} />
       <input type="password" id="websitePassword" placeholder='Enter the password...' className={styles.inputField} />
       <button onClick={setPassword} className={styles.addButton}>Add Password</button>
+    </form>
+    <div className={styles.passwordForm}>
       <button onClick={getPasswords} className={styles.loadButton}>Load Passwords</button>
     </div>
   
