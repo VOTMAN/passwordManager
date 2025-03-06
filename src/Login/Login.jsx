@@ -37,6 +37,7 @@ const Login = () => {
       })
       
       const data = await res.json()
+
       if (!res.ok) {
         statText.style.color = "red"
         statText.innerText = data.error
@@ -46,6 +47,7 @@ const Login = () => {
       const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
+      
       setToken(accessToken)
       navigate("/PMpage/" + username)
     } catch (error) {
