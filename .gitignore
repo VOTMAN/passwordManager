@@ -12,6 +12,7 @@ node_modules
 /backend/__pycache__
 /backend/PasswordManager
 dist
+src-tauri
 dist-ssr
 *.local
 /backend/my-venv
