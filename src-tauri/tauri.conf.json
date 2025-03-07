@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "passwordmanager",
-  "version": "0.1.4",
+  "productName": "PasswordManager",
+  "version": "0.1.5",
   "identifier": "com.pmManager.dev",
   "build": {
     "frontendDist": "../dist",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "password Manager",
+        "title": "Password Manager",
         "width": 800,
         "height": 600,
         "resizable": true,

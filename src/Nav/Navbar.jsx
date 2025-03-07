@@ -3,10 +3,9 @@ import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { ModeContext } from "../Context/ModeContext"
 
-
 const Navbar = () => {
   const { darkMode, changeMode } = useContext(ModeContext)
-
+  
   return (
     <>
       <div className={styles.navbar}>
@@ -21,7 +20,7 @@ const Navbar = () => {
           </aside>
       </div>
         <span className={styles.navLinkSmallScreen} id="menu">
-          <button className={styles.themeBtn} onClick={() => document.querySelector("#menu").style.width = "0%"}>❌</button>
+        <button className={styles.themeBtn} onClick={() => document.querySelector("#menu").style.width = "0%"}>❌</button>
           <hr width="40%" size="1"/>
           <button className={styles.themeBtn} onClick={() => changeMode(darkMode)}>{darkMode ? "☀️" : "🌔"}</button>
           <hr width="30%" size="1"/>

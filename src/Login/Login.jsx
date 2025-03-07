@@ -8,7 +8,8 @@ import { ServerContext } from "../Context/ServerContext"
 const Login = () => {
   const {setToken} = useContext(AuthContext)
   const {server} = useContext(ServerContext)
-  const baseurl = localStorage.getItem("server_url") || server
+  const baseurl = server
+
   const navigate = useNavigate()
   
   const handleSubmit = async (e) => {

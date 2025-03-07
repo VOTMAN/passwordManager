@@ -1,8 +1,15 @@
 import styles from "./Home.module.css"
 import Navbar from "../Nav/Navbar.jsx"
+import { useContext, useEffect } from "react"
+import { ServerContext } from "../Context/ServerContext.jsx"
 
 const Home = () => {
-
+  
+  const { setServer } = useContext(ServerContext)
+    useEffect(() => {
+      setServer(localStorage.getItem("server_url"))
+    }, [])
+    
   return(
     <div>
       <Navbar/>

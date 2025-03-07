@@ -8,7 +8,7 @@ import styles from "./PMPage.module.css"
 
 const PMPage = () => {
   const {server} = useContext(ServerContext)
-  const baseurl = localStorage.getItem("server_url") || server  
+  const baseurl = server  
 
   const { token, setPasswords, setToken } = useContext(AuthContext)
   const { darkMode, changeMode } = useContext(ModeContext)

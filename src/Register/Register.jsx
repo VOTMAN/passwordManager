@@ -5,7 +5,8 @@ import { ServerContext } from "../Context/ServerContext"
 
 const Register = () => {
   const {server} = useContext(ServerContext)
-  const baseurl = localStorage.getItem("server_url") || server
+  const baseurl = server
+
   
   const handleSubmit = async (e) => {
     e.preventDefault()

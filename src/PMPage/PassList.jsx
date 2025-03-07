@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 import styles from "./PassList.module.css"
 
 const PassList = (props) => {
-  const { passwords, setPasswords, deletePasswords } = useContext(AuthContext)
+  const { passwords, setPasswords } = useContext(AuthContext)
   const [visiblePasswords, setVisiblePasswords] = useState(passwords.map(() => false))
 
   const dp = props.deletePassword
