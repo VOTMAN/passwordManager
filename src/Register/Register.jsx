@@ -1,9 +1,11 @@
-import { useContext } from "react"
+import { useState ,useContext } from "react"
 import styles from './Register.module.css'
 import Navbar from "../Nav/Navbar"
 import { ServerContext } from "../Context/ServerContext"
+import Loading from "../Loading/Loading"
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const {server} = useContext(ServerContext)
   const baseurl = server
 
@@ -31,6 +33,7 @@ const Register = () => {
     }
     
     try {
+      setLoading(true)
       const res = await fetch(`${baseurl}/api/reg`, {
         method: 'POST',
         headers: {
@@ -40,17 +43,20 @@ const Register = () => {
       })
       
       if (!res.ok) {
+        setLoading(false)
         const errorData = await res.json()
         statText.style.color = 'red'        
         statText.innerText = errorData.error
         return
       }
-        
+      
       const data = await res.json()
       statText.style.color = 'green'
+      setLoading(false)
       statText.innerText = data.message
             
     } catch (error) {
+      setLoading(false)
       statText.style.color = "blue"
       statText.innerText = "Server Down, Try Again Later" 
     }  
@@ -58,7 +64,8 @@ const Register = () => {
 
   return (
   <>
-  <Navbar/>    
+  {loading ? <Loading/> : <></>}
+<Navbar/>    
   <div className={styles.registerContainer}>
     <h2>Register</h2>
     <form className={styles.formContainer}>

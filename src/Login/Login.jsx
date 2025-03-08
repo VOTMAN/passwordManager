@@ -1,11 +1,14 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../Context/AuthContext"
-import { useContext, useEffect } from "react"
+import { useContext, useState } from "react"
 import styles from "./Login.module.css"
 import Navbar from "../Nav/Navbar"
 import { ServerContext } from "../Context/ServerContext"
+import Loading from "../Loading/Loading"
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+
   const {setToken} = useContext(AuthContext)
   const {server} = useContext(ServerContext)
   const baseurl = server
@@ -29,6 +32,7 @@ const Login = () => {
     }
 
     try {
+      setLoading(true)
       const res = await fetch(`${baseurl}/api/login`, {
         method: 'POST',
         headers: {
@@ -40,6 +44,7 @@ const Login = () => {
       const data = await res.json()
 
       if (!res.ok) {
+        setLoading(false)
         statText.style.color = "red"
         statText.innerText = data.error
         return
@@ -50,8 +55,10 @@ const Login = () => {
       statText.innerText = data.message + ", Please wait..."
       
       setToken(accessToken)
+      setLoading(false)
       navigate("/PMpage/" + username)
     } catch (error) {
+      setLoading(false)
       console.error(error)
       statText.style.color = "blue"
       statText.innerText = "Server Down, Try Again Later"
@@ -60,6 +67,7 @@ const Login = () => {
   
   return (
     <>
+    {loading ? <Loading/> : <></>}
     <Navbar/>   
     <div className={styles.loginContainer}>
       <h2>Login</h2>
