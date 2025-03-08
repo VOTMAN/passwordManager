@@ -1,0 +1,26 @@
+.wrapper {    
+    position: fixed;
+    border: 1px black dashed;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+    opacity: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .3s ease-in all;
+}
+
+.rotate {
+    animation: rotation 10s infinite linear;
+    width: 70px;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(359deg);
+    }
+    
+    to {
+        transform: rotate(0deg);
+    }
+}
