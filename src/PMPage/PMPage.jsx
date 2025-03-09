@@ -20,7 +20,6 @@ const PMPage = () => {
     if (!token) {
       setPasswords([])
       navigate('/login')
-      window.location.reload()
     }
   }, [token, navigate])
   
@@ -36,11 +35,11 @@ const PMPage = () => {
       alert("Session Expired, Logging out...")
       setPasswords([])
       navigate("/login")
-      window.location.reload()
     }    
   }
 
   const setPassword = async (e) => {
+    checkTokenValidity()
     e.preventDefault()
     const websiteName = document.getElementById('websiteName').value
     const websiteUser = document.getElementById('websiteUser').value
@@ -89,11 +88,9 @@ const PMPage = () => {
   }
   
   const getPasswords = async () => {
+    checkTokenValidity()
+    
     const statText = document.getElementById('statText')
-    if (token == null) {
-      alert("Cannot access session token, Logging out...")
-      navigate("/login")
-    }
     try {
       const res = await fetch(`${baseurl}/api/getPasswords`, {
         method:"GET",
@@ -122,9 +119,9 @@ const PMPage = () => {
   }
 
   const deletePassword = async (idx) => {
-    const statText = document.getElementById('statText')
+    checkTokenValidity()    
     
-
+    const statText = document.getElementById('statText')
     try {
       const res = await fetch(`${baseurl}/api/deletePassword`, {
         method: "DELETE",
@@ -153,9 +150,6 @@ const PMPage = () => {
       statText.innerText = err.message
     }
   }
-
-  // checkTokenValidity()
-  setInterval(checkTokenValidity, 60000)
   
   return (
   <div className={styles.container}>

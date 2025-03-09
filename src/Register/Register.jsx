@@ -36,6 +36,7 @@ const Register = () => {
       setLoading(true)
       const res = await fetch(`${baseurl}/api/reg`, {
         method: 'POST',
+        signal: AbortSignal.timeout(5000),
         headers: {
           'Content-Type': 'application/json',
         },
