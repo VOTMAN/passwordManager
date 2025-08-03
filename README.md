@@ -1,5 +1,7 @@
 # Password Manager
 
+NOTE: The deployed site is only for demo and not for real world use, it does not potray the intended purpose of the app and only exists as a demo to showcase the app, expect delays if using it
+
 This app is a Secure, cross-platform, and locally hosted password manager.
 
 ## Installation
