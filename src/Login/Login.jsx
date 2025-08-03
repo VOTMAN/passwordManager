@@ -14,18 +14,18 @@ const Login = () => {
   const baseurl = server
 
   const navigate = useNavigate()
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = document.getElementById("user-l").value
     const password = document.getElementById("password-l").value
     let statText = document.getElementById("statusText-l")
-    
+
     if (username === '' || password === '') {
       alert("Fill all the fields")
       return
     }
-    
+
     const userData = {
       username,
       password
@@ -35,13 +35,13 @@ const Login = () => {
       setLoading(true)
       const res = await fetch(`${baseurl}/api/login`, {
         method: 'POST',
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(10000),
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData)
       })
-      
+
       const data = await res.json()
 
       if (!res.ok) {
@@ -50,11 +50,11 @@ const Login = () => {
         statText.innerText = data.error
         return
       }
-      
+
       const accessToken = data.access_token
       statText.style.color = 'black'
       statText.innerText = data.message + ", Please wait..."
-      
+
       setToken(accessToken)
       setLoading(false)
       navigate("/PMpage/" + username)
@@ -65,11 +65,11 @@ const Login = () => {
       statText.innerText = "Server Down, Try Again Later"
     }
   }
-  
+
   return (
     <>
     {loading ? <Loading/> : <></>}
-    <Navbar/>   
+    <Navbar/>
     <div className={styles.loginContainer}>
       <h2>Login</h2>
       <form className={styles.formContainer}>

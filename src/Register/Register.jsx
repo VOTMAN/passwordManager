@@ -9,14 +9,14 @@ const Register = () => {
   const {server} = useContext(ServerContext)
   const baseurl = server
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const username = String(document.getElementById('user-r').value).trim()
     const password = (document.getElementById('pass-r').value).trim()
     const repass = (document.getElementById('repass-r').value).trim()
     const statText = document.getElementById('statusText-r')
-    
+
     if (!username || !password || !repass) {
       alert("Fill all the fields")
       return
@@ -26,47 +26,47 @@ const Register = () => {
       alert("The passwords are not the same")
       return
     }
-    
+
     const userDetails = {
       username,
       password
     }
-    
+
     try {
       setLoading(true)
       const res = await fetch(`${baseurl}/api/reg`, {
         method: 'POST',
-        signal: AbortSignal.timeout(5000),
+        signal: AbortSignal.timeout(10000),
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(userDetails)
       })
-      
+
       if (!res.ok) {
         setLoading(false)
         const errorData = await res.json()
-        statText.style.color = 'red'        
+        statText.style.color = 'red'
         statText.innerText = errorData.error
         return
       }
-      
+
       const data = await res.json()
       statText.style.color = 'green'
       setLoading(false)
       statText.innerText = data.message
-            
+
     } catch (error) {
       setLoading(false)
       statText.style.color = "blue"
-      statText.innerText = "Server Down, Try Again Later" 
-    }  
+      statText.innerText = "Server Down, Try Again Later"
+    }
   }
 
   return (
   <>
   {loading ? <Loading/> : <></>}
-<Navbar/>    
+<Navbar/>
   <div className={styles.registerContainer}>
     <h2>Register</h2>
     <form className={styles.formContainer}>
