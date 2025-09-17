@@ -15,7 +15,7 @@ const ServerPage = () => {
             <Navbar/>
             <input type="text" placeholder="Enter Server Url..." id="server-url"/>
             <button onClick={() => handleUserServer(document.querySelector("#server-url").value)}>Submit</button>
-            <button onClick={() => handleUserServer("http://127.0.0.1:5000")}>Reset</button>
+            <button onClick={() => handleUserServer("https://pwserver.onrender.com/api/protected")}>Reset</button>
             <p>default is http://127.0.0.1:5000: Enter your url with http://yourserverurl:yourport, Your current server is {localStorage.getItem("server_url")}</p>
         </div>
     )

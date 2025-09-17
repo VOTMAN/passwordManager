@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ServerContext } from "./ServerContext";
 
 export const ServerProvider = ({ children }) => {
-    const [server, setServer] = useState("http://127.0.0.1:5000");
+    const [server, setServer] = useState("https://pwserver.onrender.com/api/protected");
 
     return (
         <ServerContext.Provider value={{ server, setServer }}>
