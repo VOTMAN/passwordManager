@@ -1,164 +1,405 @@
-:root[data-theme="light"] {
-  --text: hsl(0, 0%, 0%);
-  --background: hsl(200, 14%, 96%);
-  --primary: hsl(0, 3%, 6%);
-  --secondary: hsl(222, 39%, 68%);
-  --accent: hsl(210, 50%, 67%);
-}
-
-:root[data-theme="dark"] {
-  --text: hsl(0, 0%, 100%);
-  --background: hsl(200, 14%, 4%);
-  --primary: hsl(0, 3%, 94%);
-  --secondary: hsl(222, 39%, 32%);
-  --accent: hsl(210, 50%, 33%);
-}
-
+/* PMPage.module.css */
 .container {
-  max-width: 1000px;
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text);
+  padding: 2rem;
+}
+
+.mainContent {
+  max-width: 1200px;
   margin: 0 auto;
-  border-radius: 8px;
-  border: 1px solid var(--primary);
-  box-shadow: 1px 4px 12px var(--accent);
-  padding: 1rem; 
 }
 
 .header {
+  background: var(--background);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--accent);
-  margin-bottom: 1.8rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.header:hover::before {
+  left: 100%;
+}
+
+.header:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .appTitle {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.headerButton {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggleButton {
+  background: var(--secondary);
   color: var(--text);
+}
+
+.toggleButton:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .logoutButton {
-  padding: 8px 16px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-  background-color: var(--accent);
-  color: var(--background);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background: linear-gradient(135deg, #ff4757, #ff3838);
+  color: white;
+  border: 2px solid transparent;
 }
 
 .logoutButton:hover {
-  background-color: var(--secondary);
-  color: var(--text);
+  background: linear-gradient(135deg, #ff3838, #ff2f2f);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(255, 71, 87, 0.4);
 }
 
 .welcomeMessage {
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 2rem 0;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.welcomeMessage::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
+  border-radius: 2px;
+}
+
+.formSection {
+  background: var(--background);
+  border: 2px solid var(--accent);
+  border-radius: 20px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.formSection:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+.formTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
   color: var(--primary);
-}
-
-.statusText {
+  margin-bottom: 1.5rem;
   text-align: center;
-  font-size: 18px;
-  color: #ff0000;
-  margin-bottom: 20px;
+  position: relative;
 }
 
-.passwordForm {
-  margin: 1rem;
-  padding: 10px;
+.formTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
 }
 
-.passwordForm h4 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  color: var(--text);
+.inputGroup {
+  margin-bottom: 1.5rem;
 }
 
 .inputField {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 14px;
-  border: 1px solid var(--accent);
-  border-radius: 5px;
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  border: 2px solid var(--secondary);
+  border-radius: 12px;
   background-color: var(--background);
   color: var(--text);
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .inputField:focus {
-  border-color: var(--secondary);
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  transform: translateY(-1px);
+}
+
+.inputField::placeholder {
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.primaryButton {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
 }
 
 .addButton {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  background-color: var(--primary);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   color: var(--background);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  margin-top: 1rem;
 }
 
 .addButton:hover {
-  background-color: var(--secondary);
-  color: var(--background);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.addButton:active {
+  transform: translateY(0);
+}
+
+.loadSection {
+  text-align: center;
+  margin: 2rem 0;
 }
 
 .loadButton {
-  padding: 12px 20px;
-  background-color: var(--secondary);
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
   color: var(--text);
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .loadButton:hover {
-  background-color: var(--primary);
-  color: var(--secondary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+}
+
+.statusText {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  min-height: 1rem;
+}
+
+.statusText:not(:empty) {
+  border: 2px solid currentColor;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .infoText {
   text-align: center;
   color: var(--text);
-  font-size: 18px;
+  font-size: 1.1rem;
+  opacity: 0.7;
+  padding: 2rem;
+  background: var(--background);
+  border: 2px dashed var(--secondary);
+  border-radius: 16px;
+  margin: 2rem 0;
+  transition: all 0.3s ease;
 }
 
-@media (max-width: 600px) {
+.infoText:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Loading animation for buttons */
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.primaryButton:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+}
+
+/* Dark theme specific adjustments */
+:root[data-theme="dark"] .header {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+}
+
+:root[data-theme="dark"] .formSection {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+}
+
+:root[data-theme="dark"] .formSection:hover {
+  box-shadow: 0 16px 40px rgba(255, 255, 255, 0.1);
+}
+
+/* Animations */
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container > * {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.container > *:nth-child(2) { animation-delay: 0.1s; }
+.container > *:nth-child(3) { animation-delay: 0.2s; }
+.container > *:nth-child(4) { animation-delay: 0.3s; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .container {
-    padding: 15px;
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .headerButton {
+    width: 100%;
   }
 
   .appTitle {
-    font-size: 20px;
+    font-size: 1.5rem;
   }
 
   .welcomeMessage {
-    font-size: 24px;
+    font-size: 2rem;
+    margin: 1.5rem 0;
   }
 
-  .passwordForm h4 {
-    font-size: 18px;
+  .formSection {
+    padding: 1.5rem;
+  }
+
+  .loadButton {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .welcomeMessage {
+    font-size: 1.75rem;
+  }
+
+  .formSection {
+    padding: 1rem;
   }
 
   .inputField {
-    font-size: 14px;
+    padding: 0.875rem 1rem;
   }
 
-  .addButton, .loadButton {
-    font-size: 14px;
+  .primaryButton {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
   }
 }

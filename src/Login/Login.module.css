@@ -1,94 +1,107 @@
-:root[data-theme="light"] {
-    --text: hsl(0, 0%, 0%);
-    --background: hsl(200, 14%, 96%);
-    --primary: hsl(0, 3%, 6%);
-    --secondary: hsl(222, 39%, 68%);
-    --accent: hsl(210, 50%, 67%);
+.loginContainer {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 32px;
+  border-radius: 18px;
+  background: var(--background);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+  color: var(--text);
 }
 
-:root[data-theme="dark"] {
-    --text: hsl(0, 0%, 100%);
-    --background: hsl(200, 14%, 4%);
-    --primary: hsl(0, 3%, 94%);
-    --secondary: hsl(222, 39%, 32%);
-    --accent: hsl(210, 50%, 33%);
-}
-  
-.loginContainer {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid var(--primary);
-    border-radius: 8px;
-    background-color: var(--background);
-    box-shadow: 0px 10px 20px var(--accent);
-    color: var(--text);
-}
-  
 h2 {
-    text-align: center;
-    color: var(--text);
-    font-size: 24px;
-    margin-bottom: 20px;
+  text-align: center;
+  color: var(--primary);
+  font-size: 26px;
+  margin-bottom: 25px;
+  font-weight: 700;
 }
-  
+
 .formContainer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-  
+
 .inputGroup {
-    margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
-  
+
 label {
-    font-size: 14px;
-    color: var(--primary);
-    margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
 }
-  
+
 input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid var(--primary);
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s ease;
-    background-color: var(--secondary);
-    color: var(--text);
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  outline: none;
+  background-color: var(--secondary);
+  color: var(--text);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
-  
+
 input:focus {
-    border-color: var(--accent);
+  border-color: var(--accent);
+  background-color: var(--background);
 }
-  
+
 .btnLogin {
-    padding: 12px;
-    background-color: var(--text);
-    color: var(--background);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+  padding: 14px;
+  margin-top: 12px;
+  color: var(--background);
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
-  
+
 .btnLogin:hover {
-    color: var(--text);
-    background-color: var(--accent);
+  background: var(--accent);
+  color: var(--background);
+  transform: translateY(-2px);
 }
-  
+
 .statusText {
-    text-align: center;
-    margin-top: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 12px;
 }
-  
+
 .registerLink {
-    color: var(--accent);
-    text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
-  
+
 .registerLink:hover {
-    text-decoration: underline;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+h3 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--text);
+}
+
+/* ✅ Dark mode refinements */
+:root[data-theme="dark"] input {
+  background-color: #0f2a35;
+}
+
+:root[data-theme="dark"] .loginContainer {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
 }

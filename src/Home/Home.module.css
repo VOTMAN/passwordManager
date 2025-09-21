@@ -1,29 +1,77 @@
-.pageTextCenter {
-    text-align: center;
+:root {
+  --text: #08151c;
+  --background: #ebebeb;
+  --primary: #5a91af;
+  --secondary: #83c7ec;
+  --accent: #990000;
 }
 
-h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
+[data-theme="dark"] {
+  --text: #ebebeb;
+  --background: #08151c;
+  --primary: #83c7ec;
+  --secondary: #5a91af;
+  --accent: #ff4d4d;
+}
+
+.container {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero {
+  text-align: center;
+  margin: 3rem 1rem;
+}
+
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--text);
+  opacity: 0.8;
 }
 
 .banner {
-    display: flex;
-    justify-self: center;
-    position: relative;
-    width: 95%;
-    height: 300px;
-    border-radius: 20px;
-    background: rgb(103,81,185);
-    background: radial-gradient(circle, rgba(103,81,185,1) 0%, rgba(244,110,110,1) 50%, rgba(125,180,181,1) 100%);
-    margin: 2rem 0;
+  width: 90%;
+  max-width: 1000px;
+  height: 280px;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--secondary) 50%,
+    var(--accent) 100%
+  );
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  margin: 2rem 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.banner:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 @media only screen and (max-width: 750px) {
-    h1 {
-        font-size: 3rem;
-    }
-    .banner {
-        opacity: 85%;
-    }
+  .title {
+    font-size: 2.5rem;
+  }
+  .subtitle {
+    font-size: 1rem;
+  }
+  .banner {
+    height: 200px;
+    opacity: 0.9;
+  }
 }

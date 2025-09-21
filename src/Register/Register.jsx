@@ -3,6 +3,7 @@ import styles from './Register.module.css'
 import Navbar from "../Nav/Navbar"
 import { ServerContext } from "../Context/ServerContext"
 import Loading from "../Loading/Loading"
+import { Link } from "react-router-dom"
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -65,8 +66,8 @@ const Register = () => {
 
   return (
   <>
-  {loading ? <Loading/> : <></>}
-<Navbar/>
+  {loading ? <Loading message="Registering..."/> : <></>}
+  <Navbar/>
   <div className={styles.registerContainer}>
     <h2>Register</h2>
     <form className={styles.formContainer}>
@@ -85,7 +86,7 @@ const Register = () => {
       <button onClick={handleSubmit} className={styles.btnRegister}>Register</button>
       <h4 id="statusText-r" className={styles.statusText}></h4>
     </form>
-  <h3>Already a user? Go to the <a href="/Login" className={styles.loginLink}>Login Page</a></h3>
+  <h3>Already a user? Go to the <Link to="/Login" className={styles.loginLink}>Login Page</Link></h3>
   </div>
   </>
 

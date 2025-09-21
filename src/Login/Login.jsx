@@ -5,6 +5,7 @@ import styles from "./Login.module.css"
 import Navbar from "../Nav/Navbar"
 import { ServerContext } from "../Context/ServerContext"
 import Loading from "../Loading/Loading"
+import { Link } from "react-router-dom"
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -68,7 +69,7 @@ const Login = () => {
 
   return (
     <>
-    {loading ? <Loading/> : <></>}
+    {loading ? <Loading message="Logging In..."/> : <></>}
     <Navbar/>
     <div className={styles.loginContainer}>
       <h2>Login</h2>
@@ -84,7 +85,7 @@ const Login = () => {
         <button id="submit" onClick={handleSubmit} className={styles.btnLogin}>Login</button>
         <h4 id="statusText-l" className={styles.statusText}></h4>
       </form>
-      <h3>Not a user yet? Signup here - <a href="/Register" className={styles.registerLink}>Register</a></h3>
+      <h3>Not a user yet? Signup here - <Link to="/Register" className={styles.registerLink}>Register</Link></h3>
     </div>
     </>
   )

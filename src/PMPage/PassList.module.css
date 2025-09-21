@@ -1,113 +1,387 @@
-:root[data-theme="light"] {
-    --text: hsl(0, 0%, 0%);
-    --background: hsl(200, 14%, 96%);
-    --primary: hsl(0, 3%, 6%);
-    --secondary: hsl(216, 28%, 66%);
-    --accent: hsl(210, 50%, 67%);
-}
-  
-:root[data-theme="dark"] {
-    --text: hsl(0, 0%, 87%);
-    --background: hsl(200, 14%, 4%);
-    --primary: hsl(0, 0%, 83%);
-    --secondary: hsl(222, 39%, 32%);
-    --accent: hsl(210, 50%, 33%);
+/* PassList.module.css */
+.passwordContainer {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.passwordContainer {
-    padding: 1rem;
-    max-width: fit-content;
-    margin: 0 auto;
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
+  border-radius: 2px;
 }
 
 .passwordList {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .passwordItem {
-    margin: 10px;
-    padding: 15px;
-    max-width: 80vw;
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-    flex-grow: 1;
-}
-  
-.passwordHeader {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-  
-.passwordHeader h3 {
-    color: var(--accent);
-    font-size: 16px;
-}
-  
-.passwordHeader h4 {
-    color: var(--text);
-    font-size: 14px;
-    margin-left: 10px;
-}
-  
-.passwordText {
-    font-size: 18px;
-    color: var(--text);
-    word-wrap: break-word;
-    text-align: center;
-    margin-bottom: 10px;
-}
-  
-.passwordActions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
-  
-.toggleButton,
-.copyButton,
-.deleteButton {
-    padding: 10px 15px;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-  
-.toggleButton {
-    background-color: var(--secondary);
-    color: white;
-}
-  
-.toggleButton:hover {
-    background-color: #102553;
-}
-  
-.copyButton {
-    background-color: var(--accent);
-    color: var(--text);
-}
-  
-.copyButton:hover {
-    background-color: var(--primary);
-    color: var(--background);
-}
-  
-.deleteButton {
-    background-color: red;
-    color:white;
+  background: var(--background);
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
-.deleteButton:hover {
-    background-color: rgb(151, 13, 13);
+.passwordItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+.passwordItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  border-color: var(--secondary);
+}
+
+.passwordHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.websiteName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.username {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  opacity: 0.8;
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  background: var(--secondary);
+  color: white;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.passwordSection {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.passwordLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.passwordText {
+  font-family: 'Courier New', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  border-radius: 12px;
+  word-break: break-all;
+  border: 2px solid var(--secondary);
+  transition: all 0.3s ease;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passwordText.hidden {
+  letter-spacing: 2px;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.passwordText.visible {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1));
+  border-color: #4caf50;
+  color: var(--primary);
+}
+
+.passwordActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.actionButton {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  min-width: 90px;
+}
+
+.actionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.toggleButton {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  color: white;
+  border: 2px solid transparent;
+}
+
+.toggleButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.copyButton {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.copyButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #43a047, #4caf50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.copyButton.copied {
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
+  animation: pulse 0.6s ease;
+}
+
+.deleteButton {
+  background: linear-gradient(135deg, #f44336, #e53935);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.deleteButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #d32f2f, #f44336);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
 }
 
 .noPasswordsMessage {
-    text-align: center;
-    font-size: 18px;
-    color: var(--text);
-    margin-top: 20px;
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text);
+  opacity: 0.7;
+  padding: 4rem 2rem;
+  background: var(--background);
+  border: 2px dashed var(--secondary);
+  border-radius: 16px;
+  margin: 2rem 0;
+  transition: all 0.3s ease;
+}
+
+.noPasswordsMessage:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  border-style: solid;
+}
+
+.statsBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--background);
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  min-width: 120px;
+}
+
+.statNumber {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--text);
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Loading skeleton for password items */
+.passwordItem.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.passwordItem.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* Dark theme specific adjustments */
+:root[data-theme="dark"] .passwordItem {
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
+}
+
+:root[data-theme="dark"] .passwordItem:hover {
+  box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+}
+
+:root[data-theme="dark"] .passwordText {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+:root[data-theme="dark"] .passwordText.visible {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2));
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .passwordContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .passwordList {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .passwordItem {
+    padding: 1rem;
+  }
+
+  .websiteName {
+    font-size: 1.25rem;
+  }
+
+  .passwordActions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .actionButton {
+    width: 100%;
+    padding: 0.875rem 1rem;
+  }
+
+  .statsBar {
+    gap: 1rem;
+  }
+
+  .statItem {
+    min-width: 100px;
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .passwordText {
+    font-size: 1rem;
+    padding: 0.875rem;
+  }
+
+  .actionButton {
+    font-size: 0.8rem;
+    padding: 0.75rem 1rem;
+  }
 }

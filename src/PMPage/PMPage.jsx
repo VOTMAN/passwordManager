@@ -8,21 +8,35 @@ import styles from "./PMPage.module.css"
 
 const PMPage = () => {
   const {server} = useContext(ServerContext)
-  const baseurl = server  
+  const baseurl = server
 
   const { token, setPasswords, setToken } = useContext(AuthContext)
   const { darkMode, changeMode } = useContext(ModeContext)
   const [load, setLoad] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [statusMessage, setStatusMessage] = useState('')
+  const [statusType, setStatusType] = useState('') // 'success', 'error', or ''
+
   const username = useParams().username
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     if (!token) {
       setPasswords([])
       navigate('/login')
     }
   }, [token, navigate])
-  
+
+  const updateStatus = (message, type) => {
+    setStatusMessage(message)
+    setStatusType(type)
+    // Clear status after 5 seconds
+    setTimeout(() => {
+      setStatusMessage('')
+      setStatusType('')
+    }, 5000)
+  }
+
   const checkTokenValidity = async () => {
     const res = await fetch(`${baseurl}/api/protected`, {
       method: "GET",
@@ -30,27 +44,29 @@ const PMPage = () => {
         'Authorization': `Bearer ${token}`
       }
     })
-    
+
     if (res.status == 401) {
       alert("Session Expired, Logging out...")
       setPasswords([])
       navigate("/login")
-    }    
+    }
   }
 
   const setPassword = async (e) => {
-    checkTokenValidity()
     e.preventDefault()
+    setIsLoading(true)
+
+    await checkTokenValidity()
+
     const websiteName = document.getElementById('websiteName').value
     const websiteUser = document.getElementById('websiteUser').value
     const websitePassword = document.getElementById('websitePassword').value
-    const statText = document.getElementById('statText')
-    
+
     if (websiteName === '' || websiteUser === '' || websitePassword === '') {
-      alert("Fill both the fields")
+      updateStatus("Please fill in all fields", "error")
+      setIsLoading(false)
       return
     }
-    
 
     const wsd = {
       websiteName,
@@ -67,30 +83,35 @@ const PMPage = () => {
         },
         body: JSON.stringify(wsd)
       })
-      
+
       const data = await res.json()
       if (!res.ok) {
-        statText.style.color = 'red'
-        statText.innerText = data.error
+        updateStatus(data.error, "error")
+        setIsLoading(false)
         return
-      } 
+      }
 
-      statText.style.color = 'green'
-      statText.innerText = data.message
-      
+      updateStatus(data.message, "success")
+
+      // Clear form
+      document.getElementById('websiteName').value = ''
+      document.getElementById('websiteUser').value = ''
+      document.getElementById('websitePassword').value = ''
+
       setLoad(false)
-      getPasswords()
-      
+      await getPasswords()
+
     } catch (err) {
-      statText.style.color = 'red'
-      statText.innerText = err.message
+      updateStatus(err.message, "error")
     }
+
+    setIsLoading(false)
   }
-  
+
   const getPasswords = async () => {
-    checkTokenValidity()
-    
-    const statText = document.getElementById('statText')
+    setIsLoading(true)
+    await checkTokenValidity()
+
     try {
       const res = await fetch(`${baseurl}/api/getPasswords`, {
         method:"GET",
@@ -101,27 +122,25 @@ const PMPage = () => {
 
       const data = await res.json()
       if (!res.ok) {
-        statText.style.color = 'red'
-        statText.innerText = data.error
+        updateStatus(data.error, "error")
+        setIsLoading(false)
         return
       }
 
       setPasswords(data.data)
       setLoad(true)
+      updateStatus(data.message, "success")
 
-      statText.style.color = 'green'
-      statText.innerText = data.message
-    
     } catch (err) {
-      statText.style.color = 'red'
-      statText.innerText = err.message
+      updateStatus(err.message, "error")
     }
+
+    setIsLoading(false)
   }
 
   const deletePassword = async (idx) => {
-    checkTokenValidity()    
-    
-    const statText = document.getElementById('statText')
+    await checkTokenValidity()
+
     try {
       const res = await fetch(`${baseurl}/api/deletePassword`, {
         method: "DELETE",
@@ -134,49 +153,113 @@ const PMPage = () => {
 
       const data = await res.json()
       if (!res.ok) {
-        statText.style.color = 'red'
-        statText.innerText = data.error
+        updateStatus(data.error, "error")
         return
       }
 
-      
-      statText.style.color = 'green'
-      statText.innerText = data.message
-
+      updateStatus(data.message, "success")
       getPasswords()
 
     } catch (err) {
-      statText.style.color = 'red'
-      statText.innerText = err.message
+      updateStatus(err.message, "error")
     }
   }
-  
+
   return (
-  <div className={styles.container}>
-    <div className={styles.header}>
-      <h4 className={styles.appTitle}>The Password Manager</h4>
-      <div>
-        <button onClick={() => changeMode(darkMode)} className={styles.logoutButton}>Toggle Mode</button>
-        <button onClick={() => setToken(null)} className={styles.logoutButton}>Log Out</button>
+    <div className={styles.container}>
+      <div className={styles.mainContent}>
+        <div className={styles.header}>
+          <h1 className={styles.appTitle}>The Password Manager</h1>
+          <div className={styles.buttonGroup}>
+            <button
+              onClick={() => changeMode(darkMode)}
+              className={`${styles.headerButton} ${styles.toggleButton}`}
+            >
+              {darkMode ? '☀️ Light' : '🌙 Dark'}
+            </button>
+            <button
+              onClick={() => setToken(null)}
+              className={`${styles.headerButton} ${styles.logoutButton}`}
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
+
+        <h2 className={styles.welcomeMessage}>Welcome, {username}!</h2>
+
+        <div className={styles.formSection}>
+          <h3 className={styles.formTitle}>Add New Password</h3>
+          <form onSubmit={setPassword}>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                id="websiteName"
+                placeholder='Website name (e.g., Google, Facebook)'
+                className={styles.inputField}
+                disabled={isLoading}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                id="websiteUser"
+                placeholder="Username or email address"
+                className={styles.inputField}
+                disabled={isLoading}
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                type="password"
+                id="websitePassword"
+                placeholder='Enter the password'
+                className={styles.inputField}
+                disabled={isLoading}
+              />
+            </div>
+            <button
+              type="submit"
+              className={`${styles.primaryButton} ${styles.addButton}`}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Adding...' : 'Add Password'}
+            </button>
+          </form>
+        </div>
+
+        <div className={styles.loadSection}>
+          <button
+            onClick={getPasswords}
+            className={styles.loadButton}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Load Passwords'}
+          </button>
+        </div>
+
+        {statusMessage && (
+          <div
+            className={styles.statusText}
+            style={{
+              color: statusType === 'success' ? '#4caf50' : '#f44336',
+              borderColor: statusType === 'success' ? '#4caf50' : '#f44336'
+            }}
+          >
+            {statusMessage}
+          </div>
+        )}
+
+        {load ? (
+          <PassList deletePassword={deletePassword}/>
+        ) : (
+          <p className={styles.infoText}>
+            Click "Load Passwords" to view your saved passwords
+          </p>
+        )}
       </div>
-      
     </div>
-    <h1 className={styles.welcomeMessage}>Welcome {username}!</h1>
-  
-    <form className={styles.passwordForm}>
-      <h4>Add Password</h4>
-      <input type="text" id="websiteName" placeholder='Enter the website...' className={styles.inputField} />
-      <input type="text" id="websiteUser" placeholder="Website's username or email" className={styles.inputField} />
-      <input type="password" id="websitePassword" placeholder='Enter the password...' className={styles.inputField} />
-      <button onClick={setPassword} className={styles.addButton}>Add Password</button>
-    </form>
-    <div className={styles.passwordForm}>
-      <button onClick={getPasswords} className={styles.loadButton}>Load Passwords</button>
-    </div>
-  
-    <h3 id='statText' className={styles.statusText}></h3>
-    {load ? <PassList deletePassword={deletePassword}/> : <p className={styles.infoText}>Press the above button to load the passwords</p>}
-  </div>
   )
 }
+
 export default PMPage

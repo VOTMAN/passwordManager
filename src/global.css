@@ -1,0 +1,31 @@
+/* global.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+/* Theme variables */
+:root[data-theme="light"] {
+  --text: #08151c;
+  --background: #ebebeb;
+  --primary: #5a91af;
+  --secondary: #83c7ec;
+  --accent: #990000;
+}
+
+:root[data-theme="dark"] {
+  --text: #ffffff;
+  --background: #08151c;
+  --primary: #83c7ec;
+  --secondary: #5a91af;
+  --accent: #ff4d4d;
+}
+
+/* Apply theme globally */
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

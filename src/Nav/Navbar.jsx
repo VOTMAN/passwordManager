@@ -5,11 +5,10 @@ import { ModeContext } from "../Context/ModeContext"
 
 const Navbar = () => {
   const { darkMode, changeMode } = useContext(ModeContext)
-  
+
   return (
     <>
       <div className={styles.navbar}>
-          <h3>Logo</h3>
           <button className={styles.menu} onClick={() => document.querySelector("#menu").style.width = "100%"}>🍔</button>
           <aside className={styles.navLinks}>
             <button className={styles.themeBtn} onClick={() => changeMode(darkMode)}>{darkMode ? "☀️" : "🌔"}</button>
