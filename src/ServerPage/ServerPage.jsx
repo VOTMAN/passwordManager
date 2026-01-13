@@ -52,7 +52,7 @@ const ServerPage = () => {
                         <br />
                         <br />
                         Current server: <span className={styles.currentServer}>
-                            {localStorage.getItem("server_url") || "Not set"}
+                            {localStorage.getItem("server_url") || server}
                         </span>
                     </p>
                 </div>

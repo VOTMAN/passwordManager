@@ -4,10 +4,12 @@ import { useContext, useEffect } from "react"
 import { ServerContext } from "../Context/ServerContext.jsx"
 
 const Home = () => {
-  const { setServer } = useContext(ServerContext)
+  const { server, setServer } = useContext(ServerContext)
 
   useEffect(() => {
-    setServer(localStorage.getItem("server_url"))
+    
+    setServer(localStorage.getItem("server_url") == null ? server : localStorage.getItem("server_url"))
+    console.log(server)
   }, [])
 
   return (
