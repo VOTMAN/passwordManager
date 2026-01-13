@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 CORS(app, supports_credentials=True, resources={
     r"/api/*": {
-        "origins": [r"http://localhost:5173/*", r"http://tauri.localhost/*"],
+        "origins": [r"http://localhost:5173/*", r"http://tauri.localhost/*", r"https://password-manager-seven-delta.vercel.app/*"],
         "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
