@@ -37,7 +37,7 @@ const ServerPage = () => {
                         </button>
                         <button
                             className={`${styles.button} ${styles.resetButton}`}
-                            onClick={() => handleUserServer("https://pwserver.onrender.com/")}
+                            onClick={() => handleUserServer("https://pws.vnarnav.online/")}
                         >
                             Reset to Default
                         </button>
