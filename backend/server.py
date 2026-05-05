@@ -25,11 +25,12 @@ CORS(app, supports_credentials=True, resources={
 
 def getDbConn():
     conn = psycopg2.connect(
-        host=os.getenv("DB_HOST"), 
-        dbname=os.getenv("DB_NAME"), 
-        user=os.getenv("DB_USER"), 
-        password=os.getenv("DB_PASS"), 
-        port=os.getenv("DB_PORT"),
+        # host=os.getenv("DB_HOST"), 
+        # dbname=os.getenv("DB_NAME"), 
+        os.getenv("DB_CONNECTION_URL")
+        # user=os.getenv("DB_USER"), 
+        # password=os.getenv("DB_PASS"), 
+        # port=os.getenv("DB_PORT"),
     )
     return conn
     # cur = conn.cursor()
