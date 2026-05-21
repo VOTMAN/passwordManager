@@ -196,14 +196,15 @@ def deletePassword():
     conn = getDbConn()
     with conn.cursor() as cur:
         try:
+            user_id = get_jwt_identity()
             to_be_deleted_id = request.json
-            cur.execute("SELECT * FROM passwords WHERE id = %s", (to_be_deleted_id,))
+            cur.execute("SELECT * FROM passwords WHERE id = %s AND user_id = %s", (to_be_deleted_id, user_id))
             passExists = cur.fetchone()
 
             if not passExists:
                 return jsonify({"error": "Password does not exist"}), 401
 
-            cur.execute("DELETE FROM passwords WHERE id = %s", (to_be_deleted_id,))
+            cur.execute("DELETE FROM passwords WHERE id = %s AND user_id = %s", (to_be_deleted_id, user_id))
             conn.commit()
 
             return jsonify({"message": "Password Deleted"}), 200
