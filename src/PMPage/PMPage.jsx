@@ -15,7 +15,7 @@ const PMPage = () => {
   const [load, setLoad] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState('')
-  const [statusType, setStatusType] = useState('') // 'success', 'error', or ''
+  const [statusType, setStatusType] = useState('')
 
   const username = useParams().username
   const navigate = useNavigate()
@@ -24,8 +24,32 @@ const PMPage = () => {
     if (!token) {
       setPasswords([])
       navigate('/login')
+      return
     }
-  }, [token, navigate])
+
+    let expiryTimer
+
+    try {
+      const payload = token.split('.')[1]
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
+      const decoded = JSON.parse(atob(base64))
+      if (decoded?.exp) {
+        const remaining = decoded.exp * 1000 - Date.now()
+        if (remaining > 0) {
+          expiryTimer = setTimeout(() => {
+            alert("Session Expired. Logging out...")
+            setPasswords([])
+            setToken(null)
+            navigate("/login")
+          }, remaining)
+        }
+      }
+    } catch {}
+
+    return () => {
+      if (expiryTimer) clearTimeout(expiryTimer)
+    }
+  }, [token, navigate, setPasswords, setToken])
 
   const updateStatus = (message, type) => {
     setStatusMessage(message)

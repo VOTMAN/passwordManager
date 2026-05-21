@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 import { AuthContext } from "../Context/AuthContext"
 import { useLocation } from "react-router-dom"
 import styles from "./PassList.module.css"
@@ -8,12 +8,12 @@ const PassList = (props) => {
   const [visiblePasswords, setVisiblePasswords] = useState(passwords.map(() => false))
   const [copiedIndex, setCopiedIndex] = useState(null)
   const [deletingIndex, setDeletingIndex] = useState(null)
+  const hideTimersRef = useRef({})
 
   const dp = props.deletePassword
   const location = useLocation()
 
   useEffect(() => {
-    // Update visibility state when passwords change
     setVisiblePasswords(passwords.map(() => false))
   }, [passwords])
 
@@ -23,17 +23,40 @@ const PassList = (props) => {
     };
   }, [setPasswords, location]);
 
+  useEffect(() => {
+    return () => {
+      Object.values(hideTimersRef.current).forEach(clearTimeout)
+    }
+  }, [])
+
   const togglePassword = (index) => {
+    const willBeVisible = !visiblePasswords[index]
+
     setVisiblePasswords(prevState =>
       prevState.map((isVisible, i) => (i === index ? !isVisible : isVisible))
     )
+
+    if (willBeVisible) {
+      if (hideTimersRef.current[index]) {
+        clearTimeout(hideTimersRef.current[index])
+      }
+      hideTimersRef.current[index] = setTimeout(() => {
+        setVisiblePasswords(prev => prev.map((v, i) => i === index ? false : v))
+        delete hideTimersRef.current[index]
+      }, 2000)
+    } else {
+      if (hideTimersRef.current[index]) {
+        clearTimeout(hideTimersRef.current[index])
+        delete hideTimersRef.current[index]
+      }
+    }
   }
 
   const copyToClipboard = async (password, index) => {
     try {
       await navigator.clipboard.writeText(password)
       setCopiedIndex(index)
-      // Reset copied state after 2 seconds
+
       setTimeout(() => setCopiedIndex(null), 2000)
     } catch (err) {
       // Fallback for older browsers
